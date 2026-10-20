@@ -8,7 +8,7 @@ function darkened(before: PNG, after: PNG, x: number, y: number) {
   return before.data[index] - after.data[index] > 2;
 }
 
-test('the softened fluid nib stays narrow and leaves no leading wave', async ({
+test('the restored fluid brush produces its original leading wave', async ({
   page,
   isMobile,
 }) => {
@@ -29,21 +29,12 @@ test('the softened fluid nib stays narrow and leaves no leading wave', async ({
   await page.waitForTimeout(100);
   const after = PNG.sync.read(await page.screenshot({ clip, scale: 'css' }));
   let leadingPixels = 0;
-  let nibHeight = 0;
-  let trailHeight = 0;
   for (let y = 0; y < after.height; y++) {
     for (let x = 174; x < after.width; x++) {
       if (darkened(before, after, x, y)) leadingPixels++;
     }
-    if (darkened(before, after, 168, y)) nibHeight++;
-    if (darkened(before, after, 140, y)) trailHeight++;
   }
-  expect(leadingPixels).toBe(0);
-  expect(nibHeight).toBeGreaterThan(0);
-  // Rendered width includes up to two pixels of blur on each side.
-  expect(nibHeight).toBeLessThanOrEqual(8);
-  expect(trailHeight).toBeGreaterThan(nibHeight);
-  expect(trailHeight).toBeGreaterThanOrEqual(8);
+  expect(leadingPixels).toBeGreaterThan(20);
 });
 
 test('deposited ink continues to disperse through the fluid solver', async ({
@@ -77,7 +68,7 @@ test('deposited ink continues to disperse through the fluid solver', async ({
   const deposited = PNG.sync.read(
     await page.screenshot({ clip, scale: 'css' }),
   );
-  // Observe dispersion before the shorter idle fade removes the trail.
+  // Observe the same number of simulation frames across software and hardware WebGL.
   await page.evaluate(
     () =>
       new Promise<void>((resolve) => {

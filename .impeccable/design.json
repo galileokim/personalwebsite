@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T17:04:33Z",
+  "generatedAt": "2026-10-20T17:30:16Z",
   "title": "Design System: Galileo Kim",
   "extensions": {
     "colorMeta": {
@@ -23,8 +23,7 @@
     "motion": [
       { "name": "control-state", "value": "160ms ease-out", "purpose": "Link and control color feedback." },
       { "name": "disclosure-icon", "value": "180ms ease-out", "purpose": "Rotate the plus mark when project notes open." },
-      { "name": "ink-fade", "value": "1500ms", "purpose": "Smoothly fade the ink from 0.8 to 2.3 seconds after pointer movement stops." },
-      { "name": "ink-idle", "value": "2500ms", "purpose": "Clear the canvas and stop scheduling frames after the last pointer input." }
+      { "name": "ink-idle", "value": "6500ms", "purpose": "Clear the canvas and stop scheduling frames after the last pointer input." }
     ],
     "breakpoints": [
       { "name": "compact-header", "value": "420px" },
@@ -71,7 +70,7 @@
       "White/grey ground with opaque content cards.",
       "Left-aligned type and a narrow reading column.",
       "Motion limited to the visitor's ink trail and control-state transitions.",
-      "Keyline stroke icons and point-fed fluid ink with a broad, soft, calm trail."
+      "Keyline stroke icons and the original cursor-centered fluid ink with its leading wave."
     ],
     "rules": [],
     "dos": [

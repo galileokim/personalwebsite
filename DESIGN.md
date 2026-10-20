@@ -71,7 +71,7 @@ Key characteristics:
 - White/grey ground with opaque content cards.
 - Left-aligned type and a narrow reading column.
 - Motion limited to the visitor's ink trail and control-state transitions.
-- Keyline stroke icons and point-fed fluid ink with a broad, soft, calm trail.
+- Keyline stroke icons and the original cursor-centered fluid ink with its leading wave.
 
 ## Colors
 
@@ -97,7 +97,7 @@ Section separation is larger than spacing inside each group. Cards grow with the
 
 ## Elevation & Depth
 
-The system uses no box shadows. Opaque white cards with a single border sit above the ink canvas. The dye source tapers to a sharp cursor point and widens behind it. Fluid transport disperses the deposited ink. A 1.25px canvas blur diffuses the edges, which receive no additional contrast. Text and card surfaces do not use backdrop blur. The fixed canvas has no pointer events and sits below the content stacking layer.
+The system uses no box shadows. Opaque white cards with a single border sit above the ink canvas. The cursor-centered fluid source retains its original leading wave. Fluid transport disperses the deposited ink. A 1px canvas blur softens the edges, which receive no additional contrast. Text and card surfaces do not use backdrop blur. The fixed canvas has no pointer events and sits below the content stacking layer.
 
 ## Shapes
 
@@ -115,7 +115,7 @@ The header links to real sections. Profile links include labels and an accessibl
 
 ### Ink canvas
 
-The original WebGL simulation advects velocity and dye, applies low-strength vorticity, and projects pressure. A tapered segment source keeps fast strokes connected. Pointer force is applied 26px behind the cursor, directed backward into the wake. Velocity is damped at the nib, and fresh dye is added after advection, so the source does not push ink ahead of the cursor. The trailing width parameter is 7.2px, with the 0.25px source tip unchanged. Rotational strength is 1.0, the backward impulse multiplier is 0.35, and velocity decays at 2.2 per second. Dye injection is 1.25 and dye decay is 0.6 per second, so older ink clears faster while retaining fluid dispersion. Higher-resolution dye buffers preserve fine fluid detail. Pressure projection, vorticity, and advection remain active; procedural ribbons are not a substitute. Opacity follows dye density smoothly, bounded at 0.14, without an edge-emphasis pass. Ink starts on pointer movement. After input stops, a smooth fade runs from 0.8 to 2.3 seconds; buffers clear and animation stops at 2.5 seconds. Tab hiding clears the effect immediately. Reduced motion and primary coarse pointers disable it. A rendering failure hides the decoration without adding an error message. There is no site-level toggle or stored preference.
+The WebGL renderer matches commit `6bead2c`, before wave-front removal. Gaussian segment splats inject both forward velocity and dye along the pointer path before advection. A broad velocity brush produces the original leading wave; there is no protected nib or trailing-only force. Pressure projection, vorticity, and advection remain active. Opacity follows dye density smoothly, bounded at 0.14, without an edge-emphasis pass. Original dye decay is restored, and buffers clear after 6.5 seconds of inactivity. Tab hiding clears the effect immediately. Reduced motion and primary coarse pointers disable it. A rendering failure hides the decoration without adding an error message. There is no site-level toggle or stored preference.
 
 ## Do's and Don'ts
 

@@ -1,10 +1,4 @@
-import {
-  frameDelta,
-  INK_IDLE_MS,
-  idleFade,
-  pointerImpulse,
-  simulationSize,
-} from './math';
+import { frameDelta, pointerImpulse, simulationSize } from './math';
 import { shaders, vertexShader } from './shaders';
 
 type Target = {
@@ -210,8 +204,8 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
     );
     canvas.width = Math.max(1, Math.round(width * ratio));
     canvas.height = Math.max(1, Math.round(height * ratio));
-    const simulation = simulationSize(width, height, 160);
-    const dye = simulationSize(width, height, 1024);
+    const simulation = simulationSize(width, height, 112);
+    const dye = simulationSize(width, height, 512);
     velocity = pair(simulation.width, simulation.height);
     pressure = pair(simulation.width, simulation.height);
     curl = target(simulation.width, simulation.height);
@@ -282,32 +276,29 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
       if (resizePending) resize();
       const dt = frameDelta(now, previous);
       previous = now;
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      const aspect = width / height;
-      const input = splats;
-      splats = [];
-      for (const splat of input) {
-        const dx = (splat.x - splat.fromX) * width;
-        const dy = (splat.y - splat.fromY) * height;
-        const length = Math.hypot(dx, dy);
-        if (length < 0.001) continue;
-        const offsetX = ((dx / length) * 26) / width;
-        const offsetY = ((dy / length) * 26) / height;
+      const aspect = window.innerWidth / window.innerHeight;
+      for (const splat of splats) {
+        const brush = {
+          point: [splat.x, splat.y] as [number, number],
+          previousPoint: [splat.fromX, splat.fromY] as [number, number],
+          aspect,
+        };
         draw(
           passes.splat,
           velocity.write,
           { source: velocity.read },
-          {
-            point: [splat.x - offsetX, splat.y - offsetY],
-            previousPoint: [splat.fromX - offsetX, splat.fromY - offsetY],
-            aspect,
-            radius: (8 / height) ** 2,
-            value: [-splat.dx * 0.35, -splat.dy * 0.35, 0],
-          },
+          { ...brush, radius: 0.00045, value: [splat.dx, splat.dy, 0] },
         );
         velocity.swap();
+        draw(
+          passes.splat,
+          ink.write,
+          { source: ink.read },
+          { ...brush, radius: 0.000075, value: [0.65, 0, 0] },
+        );
+        ink.swap();
       }
+      splats = [];
       draw(passes.curl, curl, { velocity: velocity.read });
       draw(
         passes.swirl,
@@ -334,46 +325,18 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         passes.advect,
         velocity.write,
         { source: velocity.read, velocity: velocity.read },
-        { dt, dissipation: 2.2 },
+        { dt, dissipation: 1.8 },
       );
       velocity.swap();
-      // Fresh ink stays at the nib; pointer momentum stirs only the trailing wake.
-      if (lastPointer) {
-        draw(
-          passes.protectTip,
-          velocity.write,
-          { velocity: velocity.read },
-          {
-            point: [lastPointer.x / width, 1 - lastPointer.y / height],
-            viewport: [width, height],
-          },
-        );
-        velocity.swap();
-      }
       draw(
         passes.advect,
         ink.write,
         { source: ink.read, velocity: velocity.read },
-        { dt, dissipation: 0.6 },
+        { dt, dissipation: 0.9 },
       );
       ink.swap();
-      for (const splat of input) {
-        draw(
-          passes.paint,
-          ink.write,
-          { source: ink.read },
-          {
-            point: [splat.x, splat.y],
-            previousPoint: [splat.fromX, splat.fromY],
-            viewport: [width, height],
-            amount: 1.25,
-          },
-        );
-        ink.swap();
-      }
-      const idle = now - lastInput;
-      draw(passes.display, null, { ink: ink.read }, { fade: idleFade(idle) });
-      if (idle < INK_IDLE_MS) {
+      draw(passes.display, null, { ink: ink.read });
+      if (now - lastInput < 6500) {
         frame = requestAnimationFrame(update);
       } else {
         for (const item of targets) clear(item);

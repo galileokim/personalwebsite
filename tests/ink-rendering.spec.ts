@@ -65,7 +65,6 @@ test('ink fades smoothly without emphasized edges', async ({
         density,
       );
       gl.uniform1i(gl.getUniformLocation(program, 'ink'), 0);
-      gl.uniform1f(gl.getUniformLocation(program, 'fade'), 1);
       gl.viewport(0, 0, 128, 128);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       const pixels = new Uint8Array(128 * 4);
@@ -127,5 +126,5 @@ test('fast pointer movement leaves a continuous fine trail', async ({
     await page
       .locator('canvas')
       .evaluate((element) => getComputedStyle(element).filter),
-  ).toBe('blur(1.25px)');
+  ).toBe('blur(1px)');
 });

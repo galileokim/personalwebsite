@@ -50,13 +50,13 @@ Project notes use native disclosures. There are no placeholder repository button
 - Loads separately from the content bundle, only for a fine pointer with motion enabled.
 - Preserves the normal cursor and never intercepts clicks or scrolling.
 - Uses bounded texture sizes, pointer impulses, and simulation timesteps.
-- Fades to invisible by 2.3 seconds after input stops, clears its buffers at 2.5 seconds, and stops when the document is hidden.
+- Uses the original dye decay, clears its buffers after 6.5 seconds of inactivity, and stops when the document is hidden.
 - Releases GPU resources and listeners when disabled or unmounted.
 - Has no visible toggle or stored preference; the effect follows the input device and system motion settings.
 - Disables the effect for reduced motion and primary coarse-pointer devices.
 - Falls back to the same readable page if WebGL 2, float rendering, or the effect module is unavailable, or the graphics context is lost.
 
-The brush emits a tapered dye segment ending at the cursor. Momentum is injected backward into a wake 26px behind the pointer, while the nib stays unforced. Fresh dye enters after advection, then disperses through the full fluid solver as the cursor moves on. The trailing width parameter is 7.2px, 50% wider than the previous 4.8px, while the source tip stays at 0.25px. A 1.25px blur gives the wider trail a more diffused appearance. Low rotational strength, reduced pointer stirring, and velocity damping keep the motion calm. Faster dye decay removes older ink during movement; a smooth idle fade runs from 0.8 to 2.3 seconds after the last input. No edge-contrast boost is applied. Maximum opacity remains 0.14. Unit tests calculate text contrast against the darkest resulting background. White project cards remain opaque.
+The fluid code matches commit `6bead2c`, before the wave-front-removal changes. Gaussian splats inject dye and forward momentum along the pointer path, producing the original leading wave and fluid dispersion. A 1px canvas blur restores its original softness. There is no protected nib, backward-only wake, or separate idle-opacity fade. Maximum opacity remains 0.14. Unit tests calculate text contrast against the darkest resulting background. White project cards remain opaque.
 
 ## Build and hosting
 

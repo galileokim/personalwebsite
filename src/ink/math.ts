@@ -22,10 +22,3 @@ export function pointerImpulse(delta: number) {
 export function frameDelta(now: number, previous: number) {
   return Math.min(Math.max((now - previous) / 1000, 0), 1 / 30);
 }
-
-export const INK_IDLE_MS = 2500;
-
-export function idleFade(elapsed: number) {
-  const progress = Math.min(1, Math.max(0, (elapsed - 800) / 1500));
-  return 1 - progress * progress * (3 - 2 * progress);
-}
