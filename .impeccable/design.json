@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T09:17:35Z",
+  "title": "Design System: Galileo Kim",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Cool paper" },
+      "surface": { "role": "neutral", "displayName": "White card" },
+      "ink": { "role": "neutral", "displayName": "Graphite" },
+      "muted": { "role": "neutral", "displayName": "Supporting graphite" },
+      "line": { "role": "neutral", "displayName": "Quiet divider" },
+      "accent": { "role": "primary", "displayName": "Blue-grey ink" },
+      "control": { "role": "neutral", "displayName": "Control surface" },
+      "control-hover": { "role": "neutral", "displayName": "Control hover" },
+      "control-text": { "role": "neutral", "displayName": "Control text" },
+      "selection": { "role": "neutral", "displayName": "Selected text ground" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Introduction", "purpose": "The personal introduction, set in self-hosted Manrope." },
+      "headline": { "displayName": "Section heading", "purpose": "Separate major content groups." },
+      "title": { "displayName": "Item title", "purpose": "Experience and about-section headings." },
+      "body": { "displayName": "Reading text", "purpose": "Descriptions and background information." },
+      "label": { "displayName": "Supporting label", "purpose": "Dates, controls, and quiet metadata." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "control-state", "value": "160ms ease-out", "purpose": "Link and control color feedback." },
+      { "name": "disclosure-icon", "value": "180ms ease-out", "purpose": "Rotate the plus mark when project notes open." },
+      { "name": "ink-idle", "value": "6500ms", "purpose": "Clear the canvas and stop scheduling frames after the last pointer input." }
+    ],
+    "breakpoints": [
+      { "name": "compact-header", "value": "420px" },
+      { "name": "split-content", "value": "640px" },
+      { "name": "paired-about", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Ink toggle",
+      "kind": "button",
+      "refersTo": "ink-toggle",
+      "description": "An on/off preference, with text for loading and unavailable states.",
+      "html": "<button class=\"ds-ink\" type=\"button\" aria-pressed=\"true\">Ink on</button>",
+      "css": ".ds-ink { font-family: 'Manrope Variable', sans-serif; font-size: .75rem; font-weight: 550; color: var(--color-control-text, #4d5966); background: var(--color-control, #eceff2); border: 0; border-radius: 8px; padding: .4rem .75rem; min-height: 44px; cursor: pointer; transition: background-color 160ms ease-out; } .ds-ink:hover:not(:disabled) { background: var(--color-control-hover, #e1e7ec); } .ds-ink:focus-visible { outline: 2px solid var(--color-accent, #3e596c); outline-offset: 5px; } .ds-ink:disabled { background: transparent; cursor: default; }"
+    },
+    {
+      "name": "Project card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "Opaque content above the ink. The card itself is not a link.",
+      "html": "<article class=\"ds-card\"><h3>Social Time Tracker</h3><p>An offline-first time tracker for iOS, with Live Activities and Dynamic Island integration.</p></article>",
+      "css": ".ds-card { padding: 1.5rem; background: var(--color-surface, #fff); color: var(--color-ink, #262b31); border: 1px solid var(--color-line, #e0e4e9); border-radius: 14px; font-family: 'Manrope Variable', sans-serif; } .ds-card h3 { margin: 0; font-size: 1.125rem; font-weight: 650; letter-spacing: -.02em; } .ds-card p { margin: .75rem 0 0; font-size: .875rem; line-height: 1.75; }"
+    },
+    {
+      "name": "Project notes",
+      "kind": "custom",
+      "refersTo": "project-notes",
+      "description": "A native, keyboard-operable disclosure that keeps technical detail in context.",
+      "html": "<details class=\"ds-notes\"><summary>Project notes</summary><p>Built persistent app state with SwiftData and surfaced activity through ActivityKit.</p></details>",
+      "css": ".ds-notes { font-family: 'Manrope Variable', sans-serif; } .ds-notes summary { color: var(--color-accent, #3e596c); font-size: .75rem; font-weight: 600; min-height: 44px; display: flex; align-items: center; width: fit-content; cursor: pointer; } .ds-notes summary:hover { color: var(--color-ink, #262b31); } .ds-notes summary:focus-visible { outline: 2px solid var(--color-accent, #3e596c); outline-offset: 5px; border-radius: 3px; } .ds-notes p { color: var(--color-muted, #56616d); font-size: .8125rem; line-height: 1.8; }"
+    },
+    {
+      "name": "Section navigation",
+      "kind": "nav",
+      "description": "In-page links that wrap rather than overflow when text is enlarged.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Sections\"><a href=\"#projects\">Projects</a><a href=\"#experience\">Experience</a><a href=\"#about\">About</a><a href=\"#contact\">Contact</a></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; gap: .25rem; font-family: 'Manrope Variable', sans-serif; } .ds-nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: .5rem; color: var(--color-muted, #56616d); font-size: .8125rem; font-weight: 550; text-decoration: none; } .ds-nav a:hover { color: var(--color-ink, #262b31); } .ds-nav a:focus-visible { outline: 2px solid var(--color-accent, #3e596c); outline-offset: 5px; border-radius: 3px; }"
+    },
+    {
+      "name": "Technology list",
+      "kind": "custom",
+      "description": "Plain metadata without interactive-chip styling.",
+      "html": "<ul class=\"ds-tech\" aria-label=\"Technologies\"><li>SwiftUI</li><li>SwiftData</li><li>TypeScript</li><li>Fastify</li></ul>",
+      "css": ".ds-tech { display: flex; flex-wrap: wrap; gap: .4rem .75rem; list-style: none; padding: 0; margin: .875rem 0 0; color: var(--color-muted, #56616d); font-family: 'Manrope Variable', sans-serif; font-size: .6875rem; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "An empty canvas and an ink waterbrush",
+    "overview": "Galileo supplied the canvas metaphor, white/grey ground, and requirement for the cursor effect to remain behind the content. The implementation uses graphite text, white project cards, and space between groups. Visitors make the ink move; the text stays still.\n\nManrope gives the résumé content a conversational voice through open letterforms and moderate weights. The interaction supplies the expression that would otherwise come from imagery. There are no invented portraits or project screenshots.",
+    "keyCharacteristics": [
+      "White/grey ground with opaque content cards.",
+      "Left-aligned type and a narrow reading column.",
+      "Motion limited to the visitor's ink trail and control-state transitions."
+    ],
+    "rules": [],
+    "dos": [
+      "Do keep text and white cards more prominent than the ink.",
+      "Do preserve normal cursor behavior, keyboard operation, and touch scrolling.",
+      "Do test supporting text against the darkest ink, not just the blank canvas.",
+      "Do use the existing type scale and let content determine height."
+    ],
+    "donts": [
+      "Don't add a dark theme in conflict with the owner's white/grey brief.",
+      "Don't make the background an autonomous animation or hide text behind an entrance effect.",
+      "Don't add fabricated project imagery or nonfunctional project links."
+    ]
+  }
+}

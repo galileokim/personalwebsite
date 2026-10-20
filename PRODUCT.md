@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Vite with React and Tailwind CSS, chosen by Galileo. Hosting and domain are undecided. The project has no application scaffold yet.
+Vite with React and Tailwind CSS, chosen by Galileo. The implementation uses TypeScript and produces a static build in `dist/`. Hosting and domain are undecided.
 
 ## Users
 
