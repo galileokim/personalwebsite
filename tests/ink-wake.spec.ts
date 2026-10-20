@@ -40,10 +40,10 @@ test('the softened fluid nib stays narrow and leaves no leading wave', async ({
   }
   expect(leadingPixels).toBe(0);
   expect(nibHeight).toBeGreaterThan(0);
-  // Rendered width includes up to one pixel of blur on each side.
-  expect(nibHeight).toBeLessThanOrEqual(6);
+  // Rendered width includes up to two pixels of blur on each side.
+  expect(nibHeight).toBeLessThanOrEqual(8);
   expect(trailHeight).toBeGreaterThan(nibHeight);
-  expect(trailHeight).toBeGreaterThanOrEqual(6);
+  expect(trailHeight).toBeGreaterThanOrEqual(8);
 });
 
 test('deposited ink continues to disperse through the fluid solver', async ({
@@ -77,13 +77,13 @@ test('deposited ink continues to disperse through the fluid solver', async ({
   const deposited = PNG.sync.read(
     await page.screenshot({ clip, scale: 'css' }),
   );
-  // Software WebGL renders fewer frames per second than a hardware GPU.
+  // Observe dispersion before the shorter idle fade removes the trail.
   await page.evaluate(
     () =>
       new Promise<void>((resolve) => {
         let frames = 0;
         const next = () => {
-          if (++frames === 36) resolve();
+          if (++frames === 16) resolve();
           else requestAnimationFrame(next);
         };
         requestAnimationFrame(next);
@@ -92,12 +92,12 @@ test('deposited ink continues to disperse through the fluid solver', async ({
   const dispersed = PNG.sync.read(
     await page.screenshot({ clip, scale: 'css' }),
   );
-  let newlyPainted = 0;
-  for (let y = 0; y < dispersed.height; y++) {
-    for (let x = 0; x < dispersed.width; x++) {
-      if (!darkened(blank, deposited, x, y) && darkened(blank, dispersed, x, y))
-        newlyPainted++;
-    }
+  // Fading only lightens pixels; darker pixels elsewhere demonstrate fluid transport.
+  let redistributedPixels = 0;
+  for (let index = 0; index < dispersed.data.length; index += 4) {
+    const beforeInk = blank.data[index] - deposited.data[index];
+    const afterInk = blank.data[index] - dispersed.data[index];
+    if (afterInk > beforeInk + 1) redistributedPixels++;
   }
-  expect(newlyPainted).toBeGreaterThan(40);
+  expect(redistributedPixels).toBeGreaterThan(40);
 });

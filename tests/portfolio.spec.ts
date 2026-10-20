@@ -360,7 +360,7 @@ test('pointer movement paints actual pixels behind the content', async ({
   await page.screenshot({
     path: `${reviewDirectory}/ink-${testInfo.project.name}.png`,
   });
-  await page.waitForTimeout(7000);
+  await page.waitForTimeout(2800);
   const faded = PNG.sync.read(await page.screenshot({ clip }));
   let remaining = 0;
   for (let index = 0; index < faded.data.length; index += 4) {

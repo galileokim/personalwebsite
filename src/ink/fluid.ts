@@ -1,4 +1,10 @@
-import { frameDelta, pointerImpulse, simulationSize } from './math';
+import {
+  frameDelta,
+  INK_IDLE_MS,
+  idleFade,
+  pointerImpulse,
+  simulationSize,
+} from './math';
 import { shaders, vertexShader } from './shaders';
 
 type Target = {
@@ -348,7 +354,7 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         passes.advect,
         ink.write,
         { source: ink.read, velocity: velocity.read },
-        { dt, dissipation: 0.45 },
+        { dt, dissipation: 0.6 },
       );
       ink.swap();
       for (const splat of input) {
@@ -365,8 +371,9 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         );
         ink.swap();
       }
-      draw(passes.display, null, { ink: ink.read });
-      if (now - lastInput < 6500) {
+      const idle = now - lastInput;
+      draw(passes.display, null, { ink: ink.read }, { fade: idleFade(idle) });
+      if (idle < INK_IDLE_MS) {
         frame = requestAnimationFrame(update);
       } else {
         for (const item of targets) clear(item);

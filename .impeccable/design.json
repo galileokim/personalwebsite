@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T10:57:24Z",
+  "generatedAt": "2026-10-20T17:04:33Z",
   "title": "Design System: Galileo Kim",
   "extensions": {
     "colorMeta": {
@@ -23,7 +23,8 @@
     "motion": [
       { "name": "control-state", "value": "160ms ease-out", "purpose": "Link and control color feedback." },
       { "name": "disclosure-icon", "value": "180ms ease-out", "purpose": "Rotate the plus mark when project notes open." },
-      { "name": "ink-idle", "value": "6500ms", "purpose": "Clear the canvas and stop scheduling frames after the last pointer input." }
+      { "name": "ink-fade", "value": "1500ms", "purpose": "Smoothly fade the ink from 0.8 to 2.3 seconds after pointer movement stops." },
+      { "name": "ink-idle", "value": "2500ms", "purpose": "Clear the canvas and stop scheduling frames after the last pointer input." }
     ],
     "breakpoints": [
       { "name": "compact-header", "value": "420px" },

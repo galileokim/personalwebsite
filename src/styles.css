@@ -196,7 +196,7 @@ button:disabled {
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  filter: blur(0.75px);
+  filter: blur(1.25px);
 }
 .content-section {
   margin-top: clamp(3rem, 6vw, 4.75rem);

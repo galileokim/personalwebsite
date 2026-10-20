@@ -4,7 +4,7 @@
 
 Removed the ink control and its storage preference, decorative captions, the standalone weekend section, and metaphorical headings and taglines. Hackathon facts remain under Education. Project descriptions and metadata use direct wording.
 
-The rejected filament-only implementation was removed. The full WebGL fluid solver remains. Dye now tapers to a cursor point, and force acts backward in the trailing wake rather than at the leading tip. The trailing width parameter is now 4.8px, twice the previous 2.4px, while the source tip remains at 0.25px. Rotational strength dropped from 3.0 to 1.0, pointer stirring was halved, velocity damping increased, and dye density was reduced. A 0.75px blur softens the edges. Slower dye decay preserves gentle dispersion. Pressure, vorticity, and advection remain active.
+The rejected filament-only implementation was removed. The full WebGL fluid solver remains. Dye now tapers to a cursor point, and force acts backward in the trailing wake rather than at the leading tip. The trailing width parameter is now 7.2px, up from 4.8px, while the source tip remains at 0.25px. The 1.25px blur makes the result more diffused. Rotational strength remains 1.0 and pointer stirring remains reduced. Dye decay increased to 0.6 per second. A smooth idle fade reaches zero at 2.3 seconds, with buffer clearing and animation shutdown at 2.5 seconds instead of 6.5 seconds. Pressure, vorticity, and advection remain active.
 
 ## Results
 
@@ -12,14 +12,14 @@ The rejected filament-only implementation was removed. The full WebGL fluid solv
 
 - Biome lint and formatting.
 - Strict application TypeScript check and production build.
-- 16 unit tests for simulation bounds, source content, maximum-opacity text contrast, and official Keyline stroke mappings.
+- 19 unit tests for simulation bounds, source content, maximum-opacity text contrast, official Keyline stroke mappings, and the bounded, monotonic idle fade.
 - 49 browser tests across desktop Chromium, desktop WebKit, and a touch-device Chromium viewport. Eleven device-inapplicable cases skip by design.
 - Automated axe checks found no WCAG 2 A/AA or 2.1 AA violations with project notes closed or expanded. This is not a complete WCAG audit.
 - No measured horizontal overflow at 320, 390, 600, 768, 1024, or 1440 CSS pixels, or at 390px with doubled root text size.
 - A GPU fixture verifies smooth opacity increasing with density, without a darker edge rim. Maximum alpha remains 0.14.
-- Pixel comparisons verify continuous fast strokes, visible ink during movement, and a clear canvas after inactivity.
-- A straight-stroke probe verifies a softer nib narrower than the trailing body, a visibly fuller trail, and no painted pixels beyond the leading point in Chromium and WebKit. The nib-width allowance includes up to one pixel of blur per side.
-- A separate test verifies that ink continues to move into previously unpainted pixels after input stops. The gesture and observation use animation-frame timing so software WebGL protocol latency does not stretch the gesture into seconds.
+- Pixel comparisons verify continuous fast strokes, visible ink during movement, and a fully clear canvas by 2.8 seconds after the last input.
+- A straight-stroke probe verifies a softer nib narrower than the trailing body, a visibly fuller trail, and no painted pixels beyond the leading point in Chromium and WebKit. The nib-width allowance includes up to two pixels of blur per side.
+- A separate test verifies fluid transport during the shorter visible interval by detecting pixels that become denser despite the fade. Fading alone cannot produce that change. The gesture and observation use animation-frame timing so software WebGL protocol latency does not stretch the gesture into seconds.
 
 ## Interaction evidence
 

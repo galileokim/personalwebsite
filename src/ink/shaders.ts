@@ -45,7 +45,7 @@ export const shaders = {
       float along = dot(offset, direction);
       float behind = distance - along;
       float across = dot(offset, vec2(-direction.y, direction.x));
-      float width = mix(0.25, 4.8, smoothstep(0.0, 6.0, behind));
+      float width = mix(0.25, 7.2, smoothstep(0.0, 6.0, behind));
       float profile = exp(-across * across / (width * width));
       float tip = smoothstep(0.0, 1.0, behind);
       float start = smoothstep(-1.0, 1.0, along);
@@ -128,9 +128,10 @@ export const shaders = {
     }`,
   display: `${fragment}
     uniform sampler2D ink;
+    uniform float fade;
     void main() {
       float density = max(texture(ink, uv).x, 0.0);
-      float alpha = 0.14 * (1.0 - exp(-density * 0.9));
+      float alpha = 0.14 * (1.0 - exp(-density * 0.9)) * fade;
       result = vec4(vec3(0.20, 0.23, 0.28) * alpha, alpha);
     }`,
 } as const;
