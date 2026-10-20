@@ -112,7 +112,7 @@ The system uses no box shadows. Opaque white cards with a single border sit abov
 
 ## Shapes
 
-Cards use the card radius; the ink toggle uses the smaller control radius. Focus rings use a small corner radius and remain outside the focused element. Other content sits on the page without containers. Icons use a consistent outline stroke and accompany text labels.
+Cards use the card radius; the ink toggle uses the smaller control radius. Focus rings use a small corner radius and remain outside the focused element. Other content sits on the page without containers. Icons come from the rounded stroke entry point of `@keyline-icons/react`, with the library's native 2px stroke on a 24px grid. They accompany text labels and remain hidden from assistive technology. GitHub uses GitBranch and LinkedIn uses IdBadge because Keyline has no brand logos; the destination labels remain explicit.
 
 ## Components
 

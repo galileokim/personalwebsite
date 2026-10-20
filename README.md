@@ -68,6 +68,7 @@ A hosting provider and domain have not been selected. Add canonical URLs and a r
 
 - [kdrag0n.dev](https://kdrag0n.dev/): inspiration for a concise introduction, grouped work, and direct contact links. Its HTML was inspected; its code and identity were not copied.
 - [Yakudoo’s CodePen](https://codepen.io/Yakudoo/pen/bGOMJPw): the owner’s ink-waterbrush reference. It returned HTTP 403 in this environment, so the implementation follows the owner’s description rather than the pen’s source.
+- Keyline Icons: rounded stroke components from `@keyline-icons/react`. Named imports bundle only the icons used. Keyline has no brand logos, so labeled GitHub and LinkedIn links use its GitBranch and IdBadge symbols. The MIT license ships at `public/licenses/keyline-icons.txt`.
 - Manrope by the Manrope Project Authors: self-hosted through `@fontsource-variable/manrope`. The SIL Open Font License ships at `public/fonts/OFL-Manrope.txt` and in the built site.
 
 No external fonts, trackers, stock images, or image-generation services are used. See `docs/verification.md` for verification evidence and review limits.

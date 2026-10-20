@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.3.0",
+    "@keyline-icons/react": "^2.0.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

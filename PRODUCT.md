@@ -44,6 +44,7 @@ Open decisions:
 ## Brand Commitments
 
 - Public name: Galileo Kim.
+- Use Keyline Icons, stroke variant.
 - Galileo describes the concept as an empty canvas that someone can move an ink waterbrush across.
 - The background should be white/grey.
 - Text and content cards must take visual priority over the cursor effect and background. Galileo suggested slight blur or a greyed-out treatment as possible ways to keep the effect subdued; the exact treatment is undecided.
