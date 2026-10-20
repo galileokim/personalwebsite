@@ -33,7 +33,7 @@ export const projects = [
     category: 'Java application',
     date: 'Mar. 2026',
     description:
-      'A fitness log for tracking exercise, visualizing progress, and picking up where you left off.',
+      'A Java application for tracking exercise, visualizing progress, and saving workout history.',
     technologies: ['Java', 'JUnit', 'JSON'],
     notes: [
       'Designed an object-oriented application for fitness data and progress visualization.',
@@ -47,7 +47,7 @@ export const projects = [
     category: 'Web application',
     date: 'Oct. 2025',
     description:
-      'A subscription manager that makes sense of complex email layouts and helps clear out unwanted mail.',
+      'A web application that parses email subscriptions and automates unsubscribe processing.',
     technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Gmail API'],
     notes: [
       'Built automatic ingestion, parsing, and classification of raw HTML email layouts.',

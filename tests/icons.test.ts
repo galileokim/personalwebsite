@@ -1,7 +1,6 @@
 import {
   ArrowUp,
   ArrowUpRight,
-  Droplet,
   GitBranch,
   IdBadge,
   Mail,
@@ -19,7 +18,6 @@ const mappings = [
   ['mail', Mail],
   ['github', GitBranch],
   ['linkedin', IdBadge],
-  ['ink', Droplet],
 ] as const;
 
 describe('Keyline stroke icons', () => {

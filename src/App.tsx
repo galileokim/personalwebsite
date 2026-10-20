@@ -1,17 +1,11 @@
 import { Icon } from './components/Icon';
-import {
-  InkCanvas,
-  InkControl,
-  useInkPreference,
-} from './components/InkCanvas';
+import { InkCanvas } from './components/InkCanvas';
 import { experience, profile, projects, skills } from './data/portfolio';
 
 export default function App() {
-  const ink = useInkPreference();
-
   return (
     <>
-      <InkCanvas enabled={ink.active} onStatus={ink.setStatus} />
+      <InkCanvas />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -22,7 +16,7 @@ export default function App() {
             href="#top"
             aria-label="Galileo Kim, back to top"
           >
-            Galileo Kim<span aria-hidden="true">.</span>
+            Galileo Kim
           </a>
           <nav
             aria-label="Main navigation"
@@ -37,18 +31,13 @@ export default function App() {
 
         <main id="main" tabIndex={-1}>
           <section className="intro" id="top" aria-labelledby="intro-title">
-            <h1 id="intro-title">
-              Hi, I’m Galileo<span className="name-period">.</span>
-            </h1>
+            <h1 id="intro-title">Galileo Kim</h1>
             <p className="intro-lead">
-              Computer science student at UBC.
-              <br />
-              Building for the web, iOS, and what’s next.
+              Computer Science student at the University of British Columbia.
             </p>
             <p className="intro-description">
-              I’m learning by making things: from a better way to track time to
-              software that helps a community. Here’s a little of what I’ve been
-              working on.
+              I develop web and iOS applications and contribute to pro bono
+              projects with Motion UBC.
             </p>
             <div className="social-links flex flex-wrap items-center gap-x-5 gap-y-1">
               <a href={profile.github} target="_blank" rel="noreferrer">
@@ -61,18 +50,8 @@ export default function App() {
               </a>
               <a href={`mailto:${profile.email}`}>
                 <Icon name="mail" />
-                Email me
+                Email
               </a>
-            </div>
-            <div className="canvas-note flex flex-wrap items-center justify-between gap-3">
-              <p>
-                {ink.reason === 'touch'
-                  ? 'A little space for the things I make.'
-                  : ink.reason === 'reduced'
-                    ? 'A still canvas, following your motion preference.'
-                    : 'A blank canvas. A little room to play.'}
-              </p>
-              <InkControl ink={ink} />
             </div>
           </section>
 
@@ -81,9 +60,8 @@ export default function App() {
             className="content-section"
             aria-labelledby="projects-title"
           >
-            <div className="section-heading flex flex-wrap items-baseline justify-between gap-3">
-              <h2 id="projects-title">Things I’ve built</h2>
-              <span className="section-aside">From mobile to the web</span>
+            <div className="section-heading">
+              <h2 id="projects-title">Projects</h2>
             </div>
             <div className="project-list grid gap-4">
               {projects.map((project, index) => (
@@ -130,7 +108,7 @@ export default function App() {
             aria-labelledby="experience-title"
           >
             <div className="section-heading">
-              <h2 id="experience-title">Along the way</h2>
+              <h2 id="experience-title">Work experience</h2>
             </div>
             <div className="experience-list">
               {experience.map((item) => (
@@ -155,20 +133,23 @@ export default function App() {
             aria-labelledby="about-title"
           >
             <div className="section-heading">
-              <h2 id="about-title">Outside the projects</h2>
+              <h2 id="about-title">Education &amp; extracurriculars</h2>
             </div>
             <div className="about-grid grid gap-8 md:grid-cols-2 md:gap-12">
               <article>
-                <h3>Still a student</h3>
+                <h3>Education</h3>
                 <p className="body-copy">
-                  I’m pursuing a B.Sc. in Computer Science at the University of
-                  British Columbia in Vancouver, with an expected graduation in
-                  April 2029.
+                  B.Sc. in Computer Science, University of British Columbia,
+                  Vancouver. Expected graduation: April 2029.
                 </p>
                 <p className="small-note">GPA: 92.7%</p>
+                <p className="body-copy">
+                  Hackathons: nwHacks, Journey Hacks, Hack Camp, and Silly Hacks
+                  (winner, <strong>CSSS Rube Goldberg Track</strong>).
+                </p>
               </article>
               <article>
-                <h3>Building for the community</h3>
+                <h3>Volunteer experience</h3>
                 <p className="body-copy">
                   With Motion UBC, I develop pro bono web applications for
                   S.U.C.C.E.S.S., including tools for volunteers to view and
@@ -179,16 +160,8 @@ export default function App() {
                 </p>
               </article>
             </div>
-            <div className="hackathon-note">
-              <h3>A weekend well spent</h3>
-              <p className="body-copy">
-                You’ll also find me at hackathons: nwHacks, Journey Hacks, Hack
-                Camp, and Silly Hacks, where I won the{' '}
-                <strong>CSSS Rube Goldberg Track</strong>.
-              </p>
-            </div>
             <div className="toolbox">
-              <h3>What I work with</h3>
+              <h3>Technical skills</h3>
               <dl>
                 {skills.map((skill) => (
                   <div className="skill-row" key={skill.label}>
@@ -205,13 +178,7 @@ export default function App() {
             className="contact-section"
             aria-labelledby="contact-title"
           >
-            <h2 id="contact-title">
-              Say hello<span aria-hidden="true">.</span>
-            </h2>
-            <p>
-              Have a project in mind, or just want to talk? I’d love to hear
-              from you.
-            </p>
+            <h2 id="contact-title">Contact</h2>
             <a className="contact-email" href={`mailto:${profile.email}`}>
               {profile.email}
               <Icon name="arrow" />
@@ -220,10 +187,7 @@ export default function App() {
         </main>
 
         <footer className="site-footer flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-          <p>
-            Galileo Kim <span aria-hidden="true">·</span> A work in progress,
-            like me.
-          </p>
+          <p>Galileo Kim</p>
           <a href="#top">
             Back to top <Icon name="up" />
           </a>

@@ -23,7 +23,7 @@ test('loads real content without runtime errors or third-party assets', async ({
   });
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Hi, I’m Galileo.',
+    'Galileo Kim',
   );
   for (const name of [
     'Social Time Tracker',
@@ -138,7 +138,28 @@ test('skip link, keyboard disclosure, and focus indicators work', async ({
   await expect(page.locator('details').first()).not.toHaveAttribute('open', '');
 });
 
-test('ink preference persists and is operable by keyboard', async ({
+test('uses direct headings without decorative copy or ink controls', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { level: 2 })).toHaveText([
+    'Projects',
+    'Work experience',
+    'Education & extracurriculars',
+    'Contact',
+  ]);
+  await expect(
+    page.locator('button, .canvas-note, .ink-control, .hackathon-note'),
+  ).toHaveCount(0);
+  await expect(page.locator('body')).not.toContainText(
+    /weekend well spent|along the way|outside the projects|work in progress|what’s next|room to play|ink on/i,
+  );
+  await expect(page.locator('#about')).toContainText(
+    'CSSS Rube Goldberg Track',
+  );
+});
+
+test('ink starts without a control or an obsolete stored preference', async ({
   page,
   isMobile,
 }) => {
@@ -146,29 +167,13 @@ test('ink preference persists and is operable by keyboard', async ({
     isMobile,
     'The touch layout intentionally disables the cursor effect.',
   );
+  await page.addInitScript(() =>
+    localStorage.setItem('galileo-ink-enabled', 'false'),
+  );
   await page.goto('/');
-  await expect(
-    page.getByRole('button', { name: 'Turn off the ink cursor trail' }),
-  ).toHaveText('Ink on');
-  const toggle = page.getByRole('button', {
-    name: 'Turn off the ink cursor trail',
-  });
-  await toggle.focus();
-  await page.keyboard.press('Space');
-  await expect(
-    page.getByRole('button', { name: 'Turn on the ink cursor trail' }),
-  ).toHaveAttribute('aria-pressed', 'false');
-  await expect(page.locator('canvas')).toBeHidden();
-  await page.reload();
-  await expect(
-    page.getByRole('button', { name: 'Turn on the ink cursor trail' }),
-  ).toBeVisible();
-  await page
-    .getByRole('button', { name: 'Turn on the ink cursor trail' })
-    .click();
-  await expect(
-    page.getByRole('button', { name: 'Turn off the ink cursor trail' }),
-  ).toHaveText('Ink on');
+  await expect(page.locator('canvas')).toHaveAttribute('data-state', 'ready');
+  await expect(page.locator('canvas')).toBeVisible();
+  await expect(page.locator('button')).toHaveCount(0);
 });
 
 test('reduced motion disables ink, including live preference changes', async ({
@@ -177,9 +182,10 @@ test('reduced motion disables ink, including live preference changes', async ({
 }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  await expect(
-    page.getByRole('button', { name: /reduced-motion preference/ }),
-  ).toBeDisabled();
+  await expect(page.locator('canvas')).toHaveAttribute(
+    'data-state',
+    'inactive',
+  );
   await expect(page.locator('canvas')).toBeHidden();
   expect(
     await page
@@ -188,10 +194,12 @@ test('reduced motion disables ink, including live preference changes', async ({
   ).toBe('auto');
   if (!isMobile) {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
-    await expect(
-      page.getByRole('button', { name: 'Turn off the ink cursor trail' }),
-    ).toHaveText('Ink on');
+    await expect(page.locator('canvas')).toHaveAttribute('data-state', 'ready');
     await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(page.locator('canvas')).toHaveAttribute(
+      'data-state',
+      'inactive',
+    );
     await expect(page.locator('canvas')).toBeHidden();
   }
 });
@@ -202,9 +210,10 @@ test('touch scrolling works without starting a fluid context', async ({
 }) => {
   test.skip(!isMobile, 'Tests the coarse-pointer path.');
   await page.goto('/');
-  await expect(
-    page.getByRole('button', { name: /Touch scrolling/ }),
-  ).toBeDisabled();
+  await expect(page.locator('canvas')).toHaveAttribute(
+    'data-state',
+    'inactive',
+  );
   await expect(page.locator('canvas')).toBeHidden();
   await page
     .getByRole('navigation')
@@ -213,7 +222,7 @@ test('touch scrolling works without starting a fluid context', async ({
   await expect(page.locator('#contact')).toBeInViewport();
 });
 
-test('a WebGL failure preserves content and explains the disabled effect', async ({
+test('a WebGL failure silently preserves all content', async ({
   page,
   isMobile,
 }) => {
@@ -226,10 +235,12 @@ test('a WebGL failure preserves content and explains the disabled effect', async
     } as typeof original;
   });
   await page.goto('/');
-  await expect(
-    page.getByRole('button', { name: /could not start the ink effect/ }),
-  ).toBeDisabled();
+  await expect(page.locator('canvas')).toHaveAttribute(
+    'data-state',
+    'unavailable',
+  );
   await expect(page.locator('canvas')).toBeHidden();
+  await expect(page.locator('button')).toHaveCount(0);
   await page.locator('summary').first().click();
   await expect(page.locator('details').first()).toHaveAttribute('open', '');
 });
@@ -240,25 +251,22 @@ test('context loss disables the effect without breaking the page', async ({
 }) => {
   test.skip(isMobile, 'Touch devices do not initialize WebGL.');
   await page.goto('/');
-  await expect(
-    page.getByRole('button', { name: 'Turn off the ink cursor trail' }),
-  ).toHaveText('Ink on');
+  await expect(page.locator('canvas')).toHaveAttribute('data-state', 'ready');
   await page.locator('canvas').evaluate((canvas: HTMLCanvasElement) => {
     canvas
       .getContext('webgl2')
       ?.getExtension('WEBGL_lose_context')
       ?.loseContext();
   });
-  await expect(
-    page.getByRole('button', { name: /could not start the ink effect/ }),
-  ).toBeDisabled();
+  await expect(page.locator('canvas')).toHaveAttribute(
+    'data-state',
+    'unavailable',
+  );
+  await expect(page.locator('canvas')).toBeHidden();
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
-test('storage restrictions do not break the ink toggle', async ({
-  page,
-  isMobile,
-}) => {
+test('ink does not depend on browser storage', async ({ page, isMobile }) => {
   test.skip(
     isMobile,
     'The touch layout intentionally disables the cursor effect.',
@@ -272,15 +280,8 @@ test('storage restrictions do not break the ink toggle', async ({
     };
   });
   await page.goto('/');
-  await expect(
-    page.getByRole('button', { name: 'Turn off the ink cursor trail' }),
-  ).toHaveText('Ink on');
-  await page
-    .getByRole('button', { name: 'Turn off the ink cursor trail' })
-    .click();
-  await expect(
-    page.getByRole('button', { name: 'Turn on the ink cursor trail' }),
-  ).toBeVisible();
+  await expect(page.locator('canvas')).toHaveAttribute('data-state', 'ready');
+  await expect(page.locator('canvas')).toBeVisible();
 });
 
 test('layout reflows across widths and enlarged text without overflow', async ({
@@ -330,9 +331,7 @@ test('pointer movement paints actual pixels behind the content', async ({
     'The touch layout intentionally disables the cursor effect.',
   );
   await page.goto('/');
-  await expect(
-    page.getByRole('button', { name: 'Turn off the ink cursor trail' }),
-  ).toHaveText('Ink on');
+  await expect(page.locator('canvas')).toHaveAttribute('data-state', 'ready');
   await page.evaluate(() => document.fonts.ready);
   const clip = { x: 40, y: 160, width: 200, height: 400 };
   const before = PNG.sync.read(await page.screenshot({ clip }));

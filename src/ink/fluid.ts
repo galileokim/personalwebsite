@@ -335,14 +335,7 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         { dt, dissipation: 0.9 },
       );
       ink.swap();
-      draw(
-        passes.display,
-        null,
-        { ink: ink.read },
-        {
-          inkTexel: [1 / ink.read.width, 1 / ink.read.height],
-        },
-      );
+      draw(passes.display, null, { ink: ink.read });
       if (now - lastInput < 6500) {
         frame = requestAnimationFrame(update);
       } else {

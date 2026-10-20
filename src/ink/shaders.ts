@@ -98,16 +98,9 @@ export const shaders = {
     }`,
   display: `${fragment}
     uniform sampler2D ink;
-    uniform vec2 inkTexel;
     void main() {
       float density = max(texture(ink, uv).x, 0.0);
-      float l = texture(ink, uv - vec2(inkTexel.x, 0.0)).x;
-      float r = texture(ink, uv + vec2(inkTexel.x, 0.0)).x;
-      float b = texture(ink, uv - vec2(0.0, inkTexel.y)).x;
-      float t = texture(ink, uv + vec2(0.0, inkTexel.y)).x;
-      float veil = 1.0 - exp(-density * 0.65);
-      float edge = 1.0 - exp(-length(vec2(r - l, t - b)) * 3.2);
-      float alpha = 0.14 * clamp(0.35 * veil + 0.9 * edge, 0.0, 1.0);
+      float alpha = 0.14 * (1.0 - exp(-density * 0.9));
       result = vec4(vec3(0.20, 0.23, 0.28) * alpha, alpha);
     }`,
 } as const;

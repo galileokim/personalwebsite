@@ -133,9 +133,6 @@ button:disabled {
   font-weight: 750;
   letter-spacing: -0.035em;
 }
-.home-link span {
-  color: var(--color-accent);
-}
 .site-header nav {
   flex-wrap: wrap;
 }
@@ -159,9 +156,6 @@ button:disabled {
   font-weight: 600;
   line-height: 1.13;
   letter-spacing: -0.04em;
-}
-.name-period {
-  color: var(--color-accent);
 }
 .intro-lead {
   margin-top: 1.5rem;
@@ -195,36 +189,6 @@ button:disabled {
   width: 0.95rem;
   height: 0.95rem;
 }
-.canvas-note {
-  margin-top: 2.25rem;
-  padding-block: 0.5rem;
-  color: var(--color-muted);
-  font-size: 0.75rem;
-}
-.ink-control {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 44px;
-  padding: 0.4rem 0.75rem;
-  border-radius: 8px;
-  color: #4d5966;
-  font-weight: 550;
-  background: #eceff2;
-}
-.ink-control:hover:not(:disabled) {
-  background: #e1e7ec;
-}
-.ink-control:disabled {
-  background: transparent;
-}
-.ink-control .icon {
-  width: 0.9rem;
-  height: 0.9rem;
-}
-.ink-control[aria-pressed="false"] .icon {
-  opacity: 0.6;
-}
 .ink-canvas {
   position: fixed;
   inset: 0;
@@ -232,6 +196,7 @@ button:disabled {
   height: 100%;
   z-index: 0;
   pointer-events: none;
+  filter: blur(1px);
 }
 .content-section {
   margin-top: clamp(3rem, 6vw, 4.75rem);
@@ -242,10 +207,6 @@ button:disabled {
 }
 .section-heading {
   margin-bottom: 1.5rem;
-}
-.section-aside {
-  color: var(--color-muted);
-  font-size: 0.75rem;
 }
 .project-list {
   grid-template-columns: minmax(0, 1fr);
@@ -372,13 +333,7 @@ details[open] .when-open {
   font-size: 0.75rem;
   color: var(--color-muted);
 }
-.hackathon-note {
-  margin-top: 2.5rem;
-  padding-block: 1.5rem;
-  border-top: 1px solid var(--color-line);
-  border-bottom: 1px solid var(--color-line);
-}
-.hackathon-note strong {
+.body-copy strong {
   color: var(--color-ink);
   font-weight: 550;
 }
@@ -409,15 +364,6 @@ details[open] .when-open {
 .contact-section h2 {
   font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 550;
-}
-.contact-section h2 span {
-  color: var(--color-accent);
-}
-.contact-section p {
-  margin-top: 0.875rem;
-  color: var(--color-muted);
-  font-size: 0.875rem;
-  line-height: 1.8;
 }
 .contact-email {
   display: inline-flex;
@@ -483,19 +429,6 @@ details[open] .when-open {
   .intro {
     padding-top: 2rem;
   }
-  .canvas-note {
-    gap: 0.25rem;
-  }
-  .canvas-note > p {
-    flex-basis: 100%;
-  }
-  .ink-control {
-    margin-left: -0.75rem;
-    background: transparent;
-  }
-  .section-aside {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -512,8 +445,6 @@ details[open] .when-open {
 
 @media print {
   .ink-canvas,
-  .ink-control,
-  .canvas-note,
   nav,
   .skip-link,
   .site-footer {

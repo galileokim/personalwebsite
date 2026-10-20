@@ -1,7 +1,6 @@
 import {
   ArrowUp,
   ArrowUpRight,
-  Droplet,
   GitBranch,
   IdBadge,
   Mail,
@@ -15,7 +14,6 @@ const icons = {
   mail: Mail,
   github: GitBranch,
   linkedin: IdBadge,
-  ink: Droplet,
 } as const;
 
 export function Icon({

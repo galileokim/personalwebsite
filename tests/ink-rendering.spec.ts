@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { PNG } from 'pngjs';
 import { shaders, vertexShader } from '../src/ink/shaders';
 
-test('wispy ink has stronger edges than its interior without raising opacity', async ({
+test('ink fades smoothly without emphasized edges', async ({
   page,
   isMobile,
 }) => {
@@ -65,11 +65,6 @@ test('wispy ink has stronger edges than its interior without raising opacity', a
         density,
       );
       gl.uniform1i(gl.getUniformLocation(program, 'ink'), 0);
-      gl.uniform2f(
-        gl.getUniformLocation(program, 'inkTexel'),
-        1 / 128,
-        1 / 128,
-      );
       gl.viewport(0, 0, 128, 128);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       const pixels = new Uint8Array(128 * 4);
@@ -80,6 +75,7 @@ test('wispy ink has stronger edges than its interior without raising opacity', a
       return {
         middle: alpha[64],
         edge: Math.max(...alpha.slice(50, 60)),
+        rising: alpha.slice(0, 65),
         maximum: Math.max(...alpha),
         outside: alpha[0],
       };
@@ -87,7 +83,12 @@ test('wispy ink has stronger edges than its interior without raising opacity', a
     { vertex: vertexShader, fragment: shaders.display },
   );
   expect(result.middle).toBeGreaterThan(0);
-  expect(result.edge).toBeGreaterThan(result.middle * 1.5);
+  expect(result.edge).toBeLessThan(result.middle);
+  expect(
+    result.rising.every(
+      (alpha, index, values) => index === 0 || alpha >= values[index - 1],
+    ),
+  ).toBe(true);
   expect(result.maximum).toBeLessThanOrEqual(Math.ceil(255 * 0.14));
   expect(result.outside).toBe(0);
 });
@@ -98,9 +99,7 @@ test('fast pointer movement leaves a continuous fine trail', async ({
 }) => {
   test.skip(isMobile, 'The touch layout does not render ink.');
   await page.goto('/');
-  await expect(
-    page.getByRole('button', { name: 'Turn off the ink cursor trail' }),
-  ).toHaveText('Ink on');
+  await expect(page.locator('canvas')).toHaveAttribute('data-state', 'ready');
   await page.evaluate(() => document.fonts.ready);
   const clip = { x: 40, y: 340, width: 320, height: 120 };
   const before = PNG.sync.read(await page.screenshot({ clip, scale: 'css' }));
@@ -127,5 +126,5 @@ test('fast pointer movement leaves a continuous fine trail', async ({
     await page
       .locator('canvas')
       .evaluate((element) => getComputedStyle(element).filter),
-  ).toBe('none');
+  ).toBe('blur(1px)');
 });
