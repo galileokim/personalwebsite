@@ -297,7 +297,7 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
             previousPoint: [splat.fromX - offsetX, splat.fromY - offsetY],
             aspect,
             radius: (8 / height) ** 2,
-            value: [-splat.dx * 0.7, -splat.dy * 0.7, 0],
+            value: [-splat.dx * 0.35, -splat.dy * 0.35, 0],
           },
         );
         velocity.swap();
@@ -328,7 +328,7 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         passes.advect,
         velocity.write,
         { source: velocity.read, velocity: velocity.read },
-        { dt, dissipation: 1.8 },
+        { dt, dissipation: 2.2 },
       );
       velocity.swap();
       // Fresh ink stays at the nib; pointer momentum stirs only the trailing wake.
@@ -348,7 +348,7 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         passes.advect,
         ink.write,
         { source: ink.read, velocity: velocity.read },
-        { dt, dissipation: 0.55 },
+        { dt, dissipation: 0.45 },
       );
       ink.swap();
       for (const splat of input) {
@@ -360,7 +360,7 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
             point: [splat.x, splat.y],
             previousPoint: [splat.fromX, splat.fromY],
             viewport: [width, height],
-            amount: 2.0,
+            amount: 1.25,
           },
         );
         ink.swap();

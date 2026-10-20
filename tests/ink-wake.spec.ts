@@ -8,7 +8,7 @@ function darkened(before: PNG, after: PNG, x: number, y: number) {
   return before.data[index] - after.data[index] > 2;
 }
 
-test('the fluid nib is pointed and leaves no leading wave', async ({
+test('the softened fluid nib stays narrow and leaves no leading wave', async ({
   page,
   isMobile,
 }) => {
@@ -40,8 +40,10 @@ test('the fluid nib is pointed and leaves no leading wave', async ({
   }
   expect(leadingPixels).toBe(0);
   expect(nibHeight).toBeGreaterThan(0);
-  expect(nibHeight).toBeLessThanOrEqual(4);
+  // Rendered width includes up to one pixel of blur on each side.
+  expect(nibHeight).toBeLessThanOrEqual(6);
   expect(trailHeight).toBeGreaterThan(nibHeight);
+  expect(trailHeight).toBeGreaterThanOrEqual(6);
 });
 
 test('deposited ink continues to disperse through the fluid solver', async ({

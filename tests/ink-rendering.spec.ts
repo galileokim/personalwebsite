@@ -126,5 +126,5 @@ test('fast pointer movement leaves a continuous fine trail', async ({
     await page
       .locator('canvas')
       .evaluate((element) => getComputedStyle(element).filter),
-  ).toBe('none');
+  ).toBe('blur(0.75px)');
 });

@@ -29,7 +29,7 @@ The site presents Galileo's work. The capabilities described in his projects bel
 ## Capabilities and Constraints
 
 - Present Galileo's student background, projects, and extracurricular information using the supplied résumé.
-- Keep real fluid dynamics for the cursor ink. Ink begins at a sharp point on the cursor and spreads through the trailing fluid, without a leading blob or wave front. Use a fuller trailing stroke while keeping the tip narrow. Do not replace the fluid solver with procedural ribbons or particles. Do not show an ink button, status label, or explanation.
+- Keep real fluid dynamics for the cursor ink. Ink begins at a sharp point on the cursor and spreads through the trailing fluid, without a leading blob or wave front. Use a broad, soft trailing stroke with calm, low-turbulence motion while keeping the tip narrower than the trail. Do not replace the fluid solver with procedural ribbons or particles. Do not show an ink button, status label, or explanation.
 - Keep the effect behind the text and content cards. It must remain less prominent than the content.
 - Preserve the names, dates, technologies, and accomplishments from the résumé when adapting the text. Do not invent additional experience, project URLs, availability for work, or claims.
 - Treat résumé metrics as owner-supplied claims, not independently verified benchmarks. Preserve their qualifications, including `30+`, `100+`, and expected graduation.
@@ -48,7 +48,7 @@ Open decisions:
 - Use direct, factual wording. Section labels should describe their contents, such as Projects, Work experience, and Education & extracurriculars. Do not add metaphorical headings, personal taglines, or filler copy.
 - Galileo describes the concept as an empty canvas that someone can move an ink waterbrush across.
 - The background should be white/grey.
-- Text and content cards must take visual priority over the cursor effect and background. Galileo suggested slight blur or a greyed-out treatment as possible ways to keep the effect subdued; the exact treatment is undecided.
+- Text and content cards must take visual priority over the cursor effect and background. Prefer softer edges, lighter dye, and calmer fluid motion rather than a sharp, turbulent trail.
 - Cursor-effect reference: https://codepen.io/Yakudoo/pen/bGOMJPw.
 - Website-design reference: https://kdrag0n.dev/.
 
