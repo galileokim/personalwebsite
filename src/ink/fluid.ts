@@ -13,7 +13,14 @@ type Program = {
   uniforms: Map<string, WebGLUniformLocation | null>;
 };
 type Uniform = number | [number, number] | [number, number, number];
-type Splat = { x: number; y: number; dx: number; dy: number };
+type Splat = {
+  x: number;
+  y: number;
+  fromX: number;
+  fromY: number;
+  dx: number;
+  dy: number;
+};
 
 export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
   const context = canvas.getContext('webgl2', {
@@ -198,7 +205,7 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
     canvas.width = Math.max(1, Math.round(width * ratio));
     canvas.height = Math.max(1, Math.round(height * ratio));
     const simulation = simulationSize(width, height, 112);
-    const dye = simulationSize(width, height, 384);
+    const dye = simulationSize(width, height, 512);
     velocity = pair(simulation.width, simulation.height);
     pressure = pair(simulation.width, simulation.height);
     curl = target(simulation.width, simulation.height);
@@ -226,6 +233,8 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
       splats.push({
         x: x / window.innerWidth,
         y: 1 - y / window.innerHeight,
+        fromX: lastPointer.x / window.innerWidth,
+        fromY: 1 - lastPointer.y / window.innerHeight,
         dx: pointerImpulse(x - lastPointer.x),
         dy: pointerImpulse(lastPointer.y - y),
       });
@@ -271,21 +280,21 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
       for (const splat of splats) {
         const brush = {
           point: [splat.x, splat.y] as [number, number],
+          previousPoint: [splat.fromX, splat.fromY] as [number, number],
           aspect,
-          radius: 0.00028,
         };
         draw(
           passes.splat,
           velocity.write,
           { source: velocity.read },
-          { ...brush, value: [splat.dx, splat.dy, 0] },
+          { ...brush, radius: 0.00045, value: [splat.dx, splat.dy, 0] },
         );
         velocity.swap();
         draw(
           passes.splat,
           ink.write,
           { source: ink.read },
-          { ...brush, value: [0.9, 0, 0] },
+          { ...brush, radius: 0.000075, value: [0.65, 0, 0] },
         );
         ink.swap();
       }
@@ -316,7 +325,7 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         passes.advect,
         velocity.write,
         { source: velocity.read, velocity: velocity.read },
-        { dt, dissipation: 1.4 },
+        { dt, dissipation: 1.8 },
       );
       velocity.swap();
       draw(
@@ -326,7 +335,14 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         { dt, dissipation: 0.9 },
       );
       ink.swap();
-      draw(passes.display, null, { ink: ink.read });
+      draw(
+        passes.display,
+        null,
+        { ink: ink.read },
+        {
+          inkTexel: [1 / ink.read.width, 1 / ink.read.height],
+        },
+      );
       if (now - lastInput < 6500) {
         frame = requestAnimationFrame(update);
       } else {

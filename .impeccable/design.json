@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T09:17:35Z",
+  "generatedAt": "2026-10-20T09:52:49Z",
   "title": "Design System: Galileo Kim",
   "extensions": {
     "colorMeta": {
@@ -80,7 +80,8 @@
     "keyCharacteristics": [
       "White/grey ground with opaque content cards.",
       "Left-aligned type and a narrow reading column.",
-      "Motion limited to the visitor's ink trail and control-state transitions."
+      "Motion limited to the visitor's ink trail and control-state transitions.",
+      "Keyline stroke icons and fine ink edges, with calm motion."
     ],
     "rules": [],
     "dos": [

@@ -10,12 +10,13 @@ The CodePen reference returned HTTP 403. The effect is an original fluid simulat
 
 - Biome lint and formatting: pass.
 - Strict application TypeScript check and Vite production build: pass.
-- Unit tests: 10 passed, covering simulation bounds, timestep and pointer clamping, public data, and text contrast at maximum ink opacity.
-- Browser matrix: desktop Chromium, desktop WebKit, and touch-device Chromium. All 38 applicable checks passed across the capture run and corrective reruns; seven device-inapplicable cases skip by design. The last functional rerun passed 33 checks with six skips; the five passing pixel/capture checks were retained from the preceding run rather than taking a third visual-capture pass.
+- Unit tests: 17 passed, covering simulation bounds, timestep and pointer clamping, public data, text contrast at maximum ink opacity, and exact mappings to the official Keyline stroke components.
+- Browser matrix: desktop Chromium, desktop WebKit, and touch-device Chromium. The full `npm run check` passed after the icon/ink refinement: 42 browser checks passed and nine device-inapplicable cases skipped by design.
 - Axe WCAG 2 A/AA and 2.1 AA checks: no automated violations on any browser configuration, both with all project notes closed and with all open. This is not a claim of complete WCAG conformance.
 - Responsive checks: no horizontal overflow at 320, 390, 600, 768, 1024, or 1440 CSS pixels, or at 390px with the root font size doubled.
 - Ink pixels: mouse movement changes more than 500 pixels in a blank-margin crop in Chromium and WebKit; after the idle interval, the same crop returns to its unpainted state.
-- Design detector: ran once over the changed interface files and returned an empty findings list.
+- Ink refinement: a GPU shader fixture verifies that edge opacity exceeds interior opacity without raising the 0.14 ceiling. A fast-pointer test verifies a continuous stroke in both desktop engines, allowing the ink to drift.
+- Design detector: the refinement scan reported only advisory notices for existing font sizes omitted from DESIGN.md's compact type ramp. No typography changed in this task; that unrelated documentation reconciliation was left out of scope.
 - Production dependency audit: zero known vulnerabilities reported.
 - Production privacy check: the supplied phone number and development direction contract are absent from `dist/`.
 - DESIGN.md YAML and `.impeccable/design.json`: parsed and checked. The bundled font's original license ships in the build.
@@ -64,6 +65,8 @@ Visual finish could not be judged from the image attachments in this harness. Th
 ### Material fixes
 
 Resolved the initial enlarged-text overflow by allowing navigation wrapping and giving project grid tracks a zero minimum. Replaced the back-to-top text glyph with the existing outline icon system. Corrected two test assumptions: exact matching for the footer's link and WebKit's native keyboard navigation convention. No known failures remain in the tested paths.
+
+The requested refinement replaces hand-authored icons with Keyline's stroke components. It lowers rotational force from 18 to 3 and pointer gain from 7 to 2, narrows the dye profile, and paints continuous pointer segments. The display pass emphasizes density gradients at the edges instead of applying a canvas-wide blur. Its opacity bound, content layering, motion preferences, and failure behavior remain intact.
 
 ### Keep
 

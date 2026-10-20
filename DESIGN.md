@@ -83,6 +83,7 @@ Key characteristics:
 - White/grey ground with opaque content cards.
 - Left-aligned type and a narrow reading column.
 - Motion limited to the visitor's ink trail and control-state transitions.
+- Keyline stroke icons and fine ink edges, with calm motion.
 
 ## Colors
 
@@ -108,7 +109,7 @@ Section separation is larger than spacing inside each group. Cards grow with the
 
 ## Elevation & Depth
 
-The system uses no box shadows. Opaque white cards with a single border sit above the ink canvas. A one-pixel blur softens the canvas itself; text and card surfaces do not use backdrop blur. The fixed canvas has no pointer events and sits below the content stacking layer.
+The system uses no box shadows. Opaque white cards with a single border sit above the ink canvas. A narrow dye trail and edge-weighted opacity create wispy ink with a light interior and clearer edges. The canvas has no CSS blur; text and card surfaces do not use backdrop blur. The fixed canvas has no pointer events and sits below the content stacking layer.
 
 ## Shapes
 
@@ -130,7 +131,7 @@ The header links to real sections. Profile links include labels and an accessibl
 
 ### Ink canvas
 
-The original WebGL simulation advects velocity and dye, adds vorticity, and projects pressure. Display alpha is bounded. It starts only on pointer movement, stops after inactivity or tab hiding, and clears when disabled. Reduced motion and primary coarse pointers disable it. A rendering failure leaves the content intact and labels the effect unavailable.
+The original WebGL simulation advects velocity and dye, applies low-strength vorticity, and projects pressure. Continuous segment splats keep fast strokes connected. A broader velocity brush carries a narrower dye trail; higher-resolution dye preserves fine edges. Density gradients give those edges more contrast than the interior without raising the maximum display alpha (0.14). It starts only on pointer movement, stops after inactivity or tab hiding, and clears when disabled. Reduced motion and primary coarse pointers disable it. A rendering failure leaves the content intact and labels the effect unavailable.
 
 ## Do's and Don'ts
 

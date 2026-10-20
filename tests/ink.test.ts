@@ -21,10 +21,10 @@ describe('bounded fluid simulation', () => {
   });
 
   it('clamps pointer impulses in both directions', () => {
-    expect(pointerImpulse(3)).toBe(21);
-    expect(pointerImpulse(-3)).toBe(-21);
-    expect(pointerImpulse(1000)).toBe(220);
-    expect(pointerImpulse(-1000)).toBe(-220);
+    expect(pointerImpulse(3)).toBe(6);
+    expect(pointerImpulse(-3)).toBe(-6);
+    expect(pointerImpulse(1000)).toBe(48);
+    expect(pointerImpulse(-1000)).toBe(-48);
   });
 
   it('limits the timestep after a pause', () => {

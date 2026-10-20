@@ -56,7 +56,7 @@ Project notes use native disclosures. There are no placeholder repository button
 - Disables the effect for reduced motion and primary coarse-pointer devices.
 - Falls back to the same readable page if WebGL 2, float rendering, or the effect module is unavailable, or the graphics context is lost.
 
-The maximum opacity is bounded in the display shader. Unit tests calculate text contrast against the darkest resulting background. White project cards remain opaque.
+The brush paints continuous segments with a narrow dye profile, low rotational force, and damped pointer input. A higher-resolution dye buffer and density-gradient shading define the edges without a blanket CSS blur. The display shader keeps the interior pale and bounds maximum opacity at 0.14; the effect does not gain contrast by making the entire plume darker. Unit tests calculate text contrast against the darkest resulting background. White project cards remain opaque.
 
 ## Build and hosting
 

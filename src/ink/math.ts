@@ -16,7 +16,7 @@ export function simulationSize(
 }
 
 export function pointerImpulse(delta: number) {
-  return Math.max(-220, Math.min(220, delta * 7));
+  return Math.max(-48, Math.min(48, delta * 2));
 }
 
 export function frameDelta(now: number, previous: number) {

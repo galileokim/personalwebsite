@@ -19,12 +19,15 @@ export const shaders = {
   splat: `${fragment}
     uniform sampler2D source;
     uniform vec2 point;
+    uniform vec2 previousPoint;
     uniform vec3 value;
     uniform float aspect;
     uniform float radius;
     void main() {
-      vec2 p = uv - point;
-      p.x *= aspect;
+      vec2 offset = (uv - previousPoint) * vec2(aspect, 1.0);
+      vec2 segment = (point - previousPoint) * vec2(aspect, 1.0);
+      float along = clamp(dot(offset, segment) / max(dot(segment, segment), 0.000001), 0.0, 1.0);
+      vec2 p = offset - along * segment;
       float brush = exp(-dot(p, p) / radius);
       result = vec4(texture(source, uv).xyz + brush * value, 1.0);
     }`,
@@ -57,7 +60,7 @@ export const shaders = {
       float t = texture(curl, uv + vec2(0.0, texel.y)).x;
       float c = texture(curl, uv).x;
       vec2 force = 0.5 * vec2(abs(t) - abs(b), abs(r) - abs(l));
-      force = force / (length(force) + 0.0001) * 18.0 * c;
+      force = force / (length(force) + 0.0001) * 3.0 * c;
       force.y *= -1.0;
       vec2 v = texture(velocity, uv).xy + force * dt;
       result = vec4(clamp(v, vec2(-600.0), vec2(600.0)), 0.0, 1.0);
@@ -95,9 +98,16 @@ export const shaders = {
     }`,
   display: `${fragment}
     uniform sampler2D ink;
+    uniform vec2 inkTexel;
     void main() {
       float density = max(texture(ink, uv).x, 0.0);
-      float alpha = 0.14 * (1.0 - exp(-density * 0.9));
+      float l = texture(ink, uv - vec2(inkTexel.x, 0.0)).x;
+      float r = texture(ink, uv + vec2(inkTexel.x, 0.0)).x;
+      float b = texture(ink, uv - vec2(0.0, inkTexel.y)).x;
+      float t = texture(ink, uv + vec2(0.0, inkTexel.y)).x;
+      float veil = 1.0 - exp(-density * 0.65);
+      float edge = 1.0 - exp(-length(vec2(r - l, t - b)) * 3.2);
+      float alpha = 0.14 * clamp(0.35 * veil + 0.9 * edge, 0.0, 1.0);
       result = vec4(vec3(0.20, 0.23, 0.28) * alpha, alpha);
     }`,
 } as const;

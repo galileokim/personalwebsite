@@ -29,7 +29,7 @@ The site presents Galileo's work. The capabilities described in his projects bel
 ## Capabilities and Constraints
 
 - Present Galileo's student background, projects, and extracurricular information using the supplied résumé.
-- Include a cursor-driven trail that resembles ink dispersing in water.
+- Include a cursor-driven trail that resembles ink dispersing in water. Keep its movement calm and wispy, with more defined edges rather than turbulent, uniformly blurred clouds.
 - Keep the effect behind the text and content cards. It must remain less prominent than the content.
 - Preserve the names, dates, technologies, and accomplishments from the résumé when adapting the text. Do not invent additional experience, project URLs, availability for work, or claims.
 - Treat résumé metrics as owner-supplied claims, not independently verified benchmarks. Preserve their qualifications, including `30+`, `100+`, and expected graduation.
