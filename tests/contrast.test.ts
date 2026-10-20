@@ -38,8 +38,7 @@ const inkColor = shaderSource
 
 describe('contrast through the ink canvas', () => {
   it('finds the renderer color and maximum alpha', () => {
-    expect(maximumOpacity).toBeGreaterThan(0);
-    expect(maximumOpacity).toBeLessThan(1);
+    expect(maximumOpacity).toBe(0.09);
     expect(inkColor).toHaveLength(3);
   });
 

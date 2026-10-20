@@ -100,7 +100,7 @@ export const shaders = {
     uniform sampler2D ink;
     void main() {
       float density = max(texture(ink, uv).x, 0.0);
-      float alpha = 0.14 * (1.0 - exp(-density * 0.9));
+      float alpha = 0.09 * (1.0 - exp(-density * 0.9));
       result = vec4(vec3(0.20, 0.23, 0.28) * alpha, alpha);
     }`,
 } as const;

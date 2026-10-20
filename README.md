@@ -56,7 +56,7 @@ Project notes use native disclosures. There are no placeholder repository button
 - Disables the effect for reduced motion and primary coarse-pointer devices.
 - Falls back to the same readable page if WebGL 2, float rendering, or the effect module is unavailable, or the graphics context is lost.
 
-The fluid code matches commit `6bead2c`, before the wave-front-removal changes. Gaussian splats inject dye and forward momentum along the pointer path, producing the original leading wave and fluid dispersion. A 1px canvas blur restores its original softness. There is no protected nib, backward-only wake, or separate idle-opacity fade. Maximum opacity remains 0.14. Unit tests calculate text contrast against the darkest resulting background. White project cards remain opaque.
+The fluid behavior follows commit `6bead2c`, before the wave-front-removal changes; only the display opacity is lower. Gaussian splats inject dye and forward momentum along the pointer path, producing the original leading wave and fluid dispersion. A 1px canvas blur restores its original softness. There is no protected nib, backward-only wake, or separate idle-opacity fade. Maximum opacity is 0.09, reduced from 0.14 without altering the fluid simulation. Unit tests calculate text contrast against the darkest resulting background. White project cards remain opaque.
 
 ## Build and hosting
 

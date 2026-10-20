@@ -71,7 +71,7 @@ Key characteristics:
 - White/grey ground with opaque content cards.
 - Left-aligned type and a narrow reading column.
 - Motion limited to the visitor's ink trail and control-state transitions.
-- Keyline stroke icons and the original cursor-centered fluid ink with its leading wave.
+- Keyline stroke icons and the original cursor-centered fluid ink with its leading wave at reduced opacity.
 
 ## Colors
 
@@ -115,7 +115,7 @@ The header links to real sections. Profile links include labels and an accessibl
 
 ### Ink canvas
 
-The WebGL renderer matches commit `6bead2c`, before wave-front removal. Gaussian segment splats inject both forward velocity and dye along the pointer path before advection. A broad velocity brush produces the original leading wave; there is no protected nib or trailing-only force. Pressure projection, vorticity, and advection remain active. Opacity follows dye density smoothly, bounded at 0.14, without an edge-emphasis pass. Original dye decay is restored, and buffers clear after 6.5 seconds of inactivity. Tab hiding clears the effect immediately. Reduced motion and primary coarse pointers disable it. A rendering failure hides the decoration without adding an error message. There is no site-level toggle or stored preference.
+The WebGL renderer retains the behavior of commit `6bead2c`, before wave-front removal, with only its display opacity reduced. Gaussian segment splats inject both forward velocity and dye along the pointer path before advection. A broad velocity brush produces the original leading wave; there is no protected nib or trailing-only force. Pressure projection, vorticity, and advection remain active. Opacity follows dye density smoothly, bounded at 0.09, without an edge-emphasis pass. Original dye decay is restored, and buffers clear after 6.5 seconds of inactivity. Tab hiding clears the effect immediately. Reduced motion and primary coarse pointers disable it. A rendering failure hides the decoration without adding an error message. There is no site-level toggle or stored preference.
 
 ## Do's and Don'ts
 

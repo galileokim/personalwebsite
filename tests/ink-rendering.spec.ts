@@ -89,7 +89,7 @@ test('ink fades smoothly without emphasized edges', async ({
       (alpha, index, values) => index === 0 || alpha >= values[index - 1],
     ),
   ).toBe(true);
-  expect(result.maximum).toBeLessThanOrEqual(Math.ceil(255 * 0.14));
+  expect(result.maximum).toBeLessThanOrEqual(Math.ceil(255 * 0.09));
   expect(result.outside).toBe(0);
 });
 

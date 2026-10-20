@@ -4,7 +4,7 @@
 
 Removed the ink control and its storage preference, decorative captions, the standalone weekend section, and metaphorical headings and taglines. Hackathon facts remain under Education. Project descriptions and metadata use direct wording.
 
-Restored the ink effect from commit `6bead2c`, before wave-front removal. The three renderer files (`fluid.ts`, `shaders.ts`, and `math.ts`) match that revision exactly. The original forward momentum, leading wave, dye decay, 1px blur, and 6.5-second idle clearing are restored. Current wording, Keyline icons, and the button-free integration are unchanged.
+Restored the ink effect from commit `6bead2c`, before wave-front removal. The simulation files (`fluid.ts` and `math.ts`) still match that revision exactly. The shader differs only in its display opacity multiplier, reduced from 0.14 to 0.09. The original forward momentum, leading wave, dye decay, 1px blur, and 6.5-second idle clearing are restored. Current wording, Keyline icons, and the button-free integration are unchanged.
 
 ## Results
 
@@ -16,11 +16,11 @@ Restored the ink effect from commit `6bead2c`, before wave-front removal. The th
 - 49 browser tests across desktop Chromium, desktop WebKit, and a touch-device Chromium viewport. Eleven device-inapplicable cases skip by design.
 - Automated axe checks found no WCAG 2 A/AA or 2.1 AA violations with project notes closed or expanded. This is not a complete WCAG audit.
 - No measured horizontal overflow at 320, 390, 600, 768, 1024, or 1440 CSS pixels, or at 390px with doubled root text size.
-- A GPU fixture verifies smooth opacity increasing with density, without a darker edge rim. Maximum alpha remains 0.14.
+- A GPU fixture verifies smooth opacity increasing with density, without a darker edge rim. Maximum alpha is 0.09.
 - Pixel comparisons verify continuous strokes, visible ink during movement, and a clear canvas after the original idle interval.
 - A straight-stroke probe verifies that the original leading wave is present again in Chromium and WebKit.
 - A separate test verifies continued fluid transport by detecting pixels that become denser despite dye decay. The gesture and observation use animation-frame timing so software WebGL protocol latency does not stretch the gesture into seconds.
-- `git diff --exit-code 6bead2c -- src/ink/fluid.ts src/ink/shaders.ts src/ink/math.ts` passed, confirming exact restoration rather than an approximation.
+- Source comparison confirms the original simulation is unchanged and the only renderer modification is the display-opacity constant.
 
 ## Interaction evidence
 
