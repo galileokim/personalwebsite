@@ -31,6 +31,27 @@ export const shaders = {
       float brush = exp(-dot(p, p) / radius);
       result = vec4(texture(source, uv).xyz + brush * value, 1.0);
     }`,
+  paint: `${fragment}
+    uniform sampler2D source;
+    uniform vec2 point;
+    uniform vec2 previousPoint;
+    uniform vec2 viewport;
+    uniform float amount;
+    void main() {
+      vec2 segment = (point - previousPoint) * viewport;
+      float distance = length(segment);
+      vec2 direction = segment / max(distance, 0.0001);
+      vec2 offset = (uv - previousPoint) * viewport;
+      float along = dot(offset, direction);
+      float behind = distance - along;
+      float across = dot(offset, vec2(-direction.y, direction.x));
+      float width = mix(0.25, 2.4, smoothstep(0.0, 6.0, behind));
+      float profile = exp(-across * across / (width * width));
+      float tip = smoothstep(0.0, 1.0, behind);
+      float start = smoothstep(-1.0, 1.0, along);
+      float brush = profile * tip * start;
+      result = vec4(texture(source, uv).xyz + vec3(brush * amount, 0.0, 0.0), 1.0);
+    }`,
   advect: `${fragment}
     uniform sampler2D source;
     uniform sampler2D velocity;
@@ -95,6 +116,15 @@ export const shaders = {
       float b = texture(pressure, uv - vec2(0.0, texel.y)).x;
       float t = texture(pressure, uv + vec2(0.0, texel.y)).x;
       result = vec4(texture(velocity, uv).xy - vec2(r - l, t - b), 0.0, 1.0);
+    }`,
+  protectTip: `${fragment}
+    uniform sampler2D velocity;
+    uniform vec2 point;
+    uniform vec2 viewport;
+    void main() {
+      float distance = length((uv - point) * viewport);
+      float released = smoothstep(12.0, 28.0, distance);
+      result = vec4(texture(velocity, uv).xy * released, 0.0, 1.0);
     }`,
   display: `${fragment}
     uniform sampler2D ink;

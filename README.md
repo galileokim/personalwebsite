@@ -56,7 +56,7 @@ Project notes use native disclosures. There are no placeholder repository button
 - Disables the effect for reduced motion and primary coarse-pointer devices.
 - Falls back to the same readable page if WebGL 2, float rendering, or the effect module is unavailable, or the graphics context is lost.
 
-The brush paints continuous segments with a narrow dye profile, low rotational force, and damped pointer input. Smooth density-based shading and a one-pixel canvas blur keep its edges soft, with no edge-contrast boost. Maximum opacity remains 0.14. Unit tests calculate text contrast against the darkest resulting background. White project cards remain opaque.
+The brush emits a tapered dye segment ending at the cursor. Momentum is injected backward into a wake 26px behind the pointer, while the nib stays unforced. Fresh dye enters after advection, then disperses through the full fluid solver as the cursor moves on. The trailing width parameter is 2.4px, 50% wider than 1.6px, while the tip stays at 0.25px. Higher-resolution dye buffers replace blanket blur; no edge-contrast boost is applied. Maximum opacity remains 0.14. Unit tests calculate text contrast against the darkest resulting background. White project cards remain opaque.
 
 ## Build and hosting
 

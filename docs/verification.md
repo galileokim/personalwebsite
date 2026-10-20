@@ -4,7 +4,7 @@
 
 Removed the ink control and its storage preference, decorative captions, the standalone weekend section, and metaphorical headings and taglines. Hackathon facts remain under Education. Project descriptions and metadata use direct wording.
 
-Restored smooth density-based ink shading and a one-pixel canvas blur. Kept the lower rotational force, damped pointer input, narrow continuous trails, and Keyline stroke icons.
+The rejected filament-only implementation was removed. The full WebGL fluid solver remains. Dye now tapers to a cursor point, and force acts backward in the trailing wake rather than at the leading tip. The trailing width parameter increased from 1.6px to 2.4px while the tip remained at 0.25px. Blanket blur was removed; pressure, vorticity, advection, and density-based shading remain.
 
 ## Results
 
@@ -13,11 +13,13 @@ Restored smooth density-based ink shading and a one-pixel canvas blur. Kept the 
 - Biome lint and formatting.
 - Strict application TypeScript check and production build.
 - 16 unit tests for simulation bounds, source content, maximum-opacity text contrast, and official Keyline stroke mappings.
-- 45 browser tests across desktop Chromium, desktop WebKit, and a touch-device Chromium viewport. Nine device-inapplicable cases skip by design.
+- 49 browser tests across desktop Chromium, desktop WebKit, and a touch-device Chromium viewport. Eleven device-inapplicable cases skip by design.
 - Automated axe checks found no WCAG 2 A/AA or 2.1 AA violations with project notes closed or expanded. This is not a complete WCAG audit.
 - No measured horizontal overflow at 320, 390, 600, 768, 1024, or 1440 CSS pixels, or at 390px with doubled root text size.
 - A GPU fixture verifies smooth opacity increasing with density, without a darker edge rim. Maximum alpha remains 0.14.
 - Pixel comparisons verify continuous fast strokes, visible ink during movement, and a clear canvas after inactivity.
+- A straight-stroke probe verifies a narrow nib and no painted pixels beyond the leading point in Chromium and WebKit.
+- A separate test verifies that ink continues to move into previously unpainted pixels after input stops. The gesture and observation use animation-frame timing so software WebGL protocol latency does not stretch the gesture into seconds.
 
 ## Interaction evidence
 

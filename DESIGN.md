@@ -71,7 +71,7 @@ Key characteristics:
 - White/grey ground with opaque content cards.
 - Left-aligned type and a narrow reading column.
 - Motion limited to the visitor's ink trail and control-state transitions.
-- Keyline stroke icons and soft, thin ink trails with calm motion.
+- Keyline stroke icons and point-fed fluid ink with a fuller trailing stroke.
 
 ## Colors
 
@@ -97,7 +97,7 @@ Section separation is larger than spacing inside each group. Cards grow with the
 
 ## Elevation & Depth
 
-The system uses no box shadows. Opaque white cards with a single border sit above the ink canvas. A narrow dye trail uses smooth density-based opacity and a one-pixel canvas blur. Edges receive no additional contrast. Text and card surfaces do not use backdrop blur. The fixed canvas has no pointer events and sits below the content stacking layer.
+The system uses no box shadows. Opaque white cards with a single border sit above the ink canvas. The dye source tapers to a sharp cursor point and widens behind it. Fluid transport disperses the deposited ink. The canvas has no blanket blur, and edges receive no additional contrast. Text and card surfaces do not use backdrop blur. The fixed canvas has no pointer events and sits below the content stacking layer.
 
 ## Shapes
 
@@ -115,7 +115,7 @@ The header links to real sections. Profile links include labels and an accessibl
 
 ### Ink canvas
 
-The original WebGL simulation advects velocity and dye, applies low-strength vorticity, and projects pressure. Continuous segment splats keep fast strokes connected. A broader velocity brush carries a narrower dye trail. Opacity follows dye density smoothly, bounded at 0.14, without an edge-emphasis pass. Ink starts on pointer movement and stops after inactivity or tab hiding. Reduced motion and primary coarse pointers disable it. A rendering failure hides the decoration without adding an error message. There is no site-level toggle or stored preference.
+The original WebGL simulation advects velocity and dye, applies low-strength vorticity, and projects pressure. A tapered segment source keeps fast strokes connected. Pointer force is applied 26px behind the cursor, directed backward into the wake. Velocity is damped at the nib, and fresh dye is added after advection, so the source does not push ink ahead of the cursor. The trailing width parameter is 2.4px, with the 0.25px tip unchanged. Higher-resolution dye buffers preserve fine fluid detail. Pressure projection, vorticity, and advection remain active; procedural ribbons are not a substitute. Opacity follows dye density smoothly, bounded at 0.14, without an edge-emphasis pass. Ink starts on pointer movement and stops after inactivity or tab hiding. Reduced motion and primary coarse pointers disable it. A rendering failure hides the decoration without adding an error message. There is no site-level toggle or stored preference.
 
 ## Do's and Don'ts
 

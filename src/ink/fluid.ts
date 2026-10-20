@@ -204,8 +204,8 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
     );
     canvas.width = Math.max(1, Math.round(width * ratio));
     canvas.height = Math.max(1, Math.round(height * ratio));
-    const simulation = simulationSize(width, height, 112);
-    const dye = simulationSize(width, height, 512);
+    const simulation = simulationSize(width, height, 160);
+    const dye = simulationSize(width, height, 1024);
     velocity = pair(simulation.width, simulation.height);
     pressure = pair(simulation.width, simulation.height);
     curl = target(simulation.width, simulation.height);
@@ -276,29 +276,32 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
       if (resizePending) resize();
       const dt = frameDelta(now, previous);
       previous = now;
-      const aspect = window.innerWidth / window.innerHeight;
-      for (const splat of splats) {
-        const brush = {
-          point: [splat.x, splat.y] as [number, number],
-          previousPoint: [splat.fromX, splat.fromY] as [number, number],
-          aspect,
-        };
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const aspect = width / height;
+      const input = splats;
+      splats = [];
+      for (const splat of input) {
+        const dx = (splat.x - splat.fromX) * width;
+        const dy = (splat.y - splat.fromY) * height;
+        const length = Math.hypot(dx, dy);
+        if (length < 0.001) continue;
+        const offsetX = ((dx / length) * 26) / width;
+        const offsetY = ((dy / length) * 26) / height;
         draw(
           passes.splat,
           velocity.write,
           { source: velocity.read },
-          { ...brush, radius: 0.00045, value: [splat.dx, splat.dy, 0] },
+          {
+            point: [splat.x - offsetX, splat.y - offsetY],
+            previousPoint: [splat.fromX - offsetX, splat.fromY - offsetY],
+            aspect,
+            radius: (8 / height) ** 2,
+            value: [-splat.dx * 0.7, -splat.dy * 0.7, 0],
+          },
         );
         velocity.swap();
-        draw(
-          passes.splat,
-          ink.write,
-          { source: ink.read },
-          { ...brush, radius: 0.000075, value: [0.65, 0, 0] },
-        );
-        ink.swap();
       }
-      splats = [];
       draw(passes.curl, curl, { velocity: velocity.read });
       draw(
         passes.swirl,
@@ -328,13 +331,40 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
         { dt, dissipation: 1.8 },
       );
       velocity.swap();
+      // Fresh ink stays at the nib; pointer momentum stirs only the trailing wake.
+      if (lastPointer) {
+        draw(
+          passes.protectTip,
+          velocity.write,
+          { velocity: velocity.read },
+          {
+            point: [lastPointer.x / width, 1 - lastPointer.y / height],
+            viewport: [width, height],
+          },
+        );
+        velocity.swap();
+      }
       draw(
         passes.advect,
         ink.write,
         { source: ink.read, velocity: velocity.read },
-        { dt, dissipation: 0.9 },
+        { dt, dissipation: 0.55 },
       );
       ink.swap();
+      for (const splat of input) {
+        draw(
+          passes.paint,
+          ink.write,
+          { source: ink.read },
+          {
+            point: [splat.x, splat.y],
+            previousPoint: [splat.fromX, splat.fromY],
+            viewport: [width, height],
+            amount: 2.0,
+          },
+        );
+        ink.swap();
+      }
       draw(passes.display, null, { ink: ink.read });
       if (now - lastInput < 6500) {
         frame = requestAnimationFrame(update);
