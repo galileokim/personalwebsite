@@ -1,92 +1,46 @@
 # Verification record
 
-## Scope and limits
+## Latest change
 
-The implementation was checked locally with production builds, browser automation, pixel comparisons, computed layout measurements, source inspection, and the design detector. This harness has no subagent capability; the finish review and documentation pass ran in-thread. Its image reader reported that this model cannot view images. Screenshot files were captured and decoded, but no human-equivalent visual assessment is claimed.
+Removed the ink control and its storage preference, decorative captions, the standalone weekend section, and metaphorical headings and taglines. Hackathon facts remain under Education. Project descriptions and metadata use direct wording.
 
-The CodePen reference returned HTTP 403. The effect is an original fluid simulation based on Galileo's description, not a source-level reproduction of that pen. External profile navigation was checked against the supplied URLs with destination responses intercepted; this does not verify the remote services or send email.
+Restored smooth density-based ink shading and a one-pixel canvas blur. Kept the lower rotational force, damped pointer input, narrow continuous trails, and Keyline stroke icons.
 
-## Checks
+## Results
 
-- Biome lint and formatting: pass.
-- Strict application TypeScript check and Vite production build: pass.
-- Unit tests: 17 passed, covering simulation bounds, timestep and pointer clamping, public data, text contrast at maximum ink opacity, and exact mappings to the official Keyline stroke components.
-- Browser matrix: desktop Chromium, desktop WebKit, and touch-device Chromium. The full `npm run check` passed after the icon/ink refinement: 42 browser checks passed and nine device-inapplicable cases skipped by design.
-- Axe WCAG 2 A/AA and 2.1 AA checks: no automated violations on any browser configuration, both with all project notes closed and with all open. This is not a claim of complete WCAG conformance.
-- Responsive checks: no horizontal overflow at 320, 390, 600, 768, 1024, or 1440 CSS pixels, or at 390px with the root font size doubled.
-- Ink pixels: mouse movement changes more than 500 pixels in a blank-margin crop in Chromium and WebKit; after the idle interval, the same crop returns to its unpainted state.
-- Ink refinement: a GPU shader fixture verifies that edge opacity exceeds interior opacity without raising the 0.14 ceiling. A fast-pointer test verifies a continuous stroke in both desktop engines, allowing the ink to drift.
-- Design detector: the refinement scan reported only advisory notices for existing font sizes omitted from DESIGN.md's compact type ramp. No typography changed in this task; that unrelated documentation reconciliation was left out of scope.
-- Production dependency audit: zero known vulnerabilities reported.
-- Production privacy check: the supplied phone number and development direction contract are absent from `dist/`.
-- DESIGN.md YAML and `.impeccable/design.json`: parsed and checked. The bundled font's original license ships in the build.
+`npm run check` passed:
+
+- Biome lint and formatting.
+- Strict application TypeScript check and production build.
+- 16 unit tests for simulation bounds, source content, maximum-opacity text contrast, and official Keyline stroke mappings.
+- 45 browser tests across desktop Chromium, desktop WebKit, and a touch-device Chromium viewport. Nine device-inapplicable cases skip by design.
+- Automated axe checks found no WCAG 2 A/AA or 2.1 AA violations with project notes closed or expanded. This is not a complete WCAG audit.
+- No measured horizontal overflow at 320, 390, 600, 768, 1024, or 1440 CSS pixels, or at 390px with doubled root text size.
+- A GPU fixture verifies smooth opacity increasing with density, without a darker edge rim. Maximum alpha remains 0.14.
+- Pixel comparisons verify continuous fast strokes, visible ink during movement, and a clear canvas after inactivity.
 
 ## Interaction evidence
 
-| Element or state | Observed result |
+| Element or state | Result |
 | --- | --- |
-| Projects, Experience, About, Contact | Each link updates the hash and brings its real section into view |
-| Header name and Back to top | Both return to the introduction |
-| Four project-note disclosures | Each opens its technical notes and closes again |
-| Skip link | Keyboard activation moves focus to main content; WebKit uses its native Option-Tab link-navigation convention |
-| Disclosure keyboard input | Enter opens, Space closes, and the focus outline is visible |
-| GitHub and LinkedIn | Open the exact supplied destinations in new tabs |
-| Both email links | Use `mailto:galileokim451@gmail.com`; no message was sent |
-| Ink toggle | Keyboard and pointer activation turn the canvas off and on; the choice survives reload |
-| Storage denied | The ink toggle remains usable without persistence |
-| Reduced motion | Canvas stays hidden; live preference changes stop/re-enable it; smooth scrolling is disabled |
-| Touch device | Ink is disabled and tapping section links scrolls normally |
-| WebGL unavailable | Content stays usable; the disabled control explains the effect is unavailable |
-| Context lost | Ink disables without breaking content |
-| Active ink | Draws and fades actual pixels; canvas cannot intercept events; project surfaces remain opaque white |
-| Initial page load | No page or console errors and no third-party asset requests in the tested load path |
+| Section navigation and back-to-top links | Reach the corresponding content |
+| Four project disclosures | Open and close by pointer and keyboard |
+| Skip link | Moves keyboard focus to main content; WebKit uses Option-Tab for links |
+| GitHub and LinkedIn | Open the supplied destinations in new tabs; external responses were intercepted for the navigation test |
+| Email links | Use the supplied mailto address; no message was sent |
+| Removed ink control | No button or explanatory label remains |
+| Obsolete storage preference | An old disabled value does not silently suppress the effect |
+| Storage denied | The effect starts without accessing storage |
+| Reduced motion | Disables ink and smooth scrolling; live preference changes are supported |
+| Touch device | Ink remains inactive and section-link taps scroll normally |
+| WebGL failure or context loss | Hides the decoration without interrupting content or adding an error message |
+| Content layering | Canvas cannot intercept input; white cards remain opaque |
+| Initial load | No page/console errors or third-party asset requests in the tested path |
 
-## Finish review
+## Review limits
 
-### Persistence
+Screenshots for desktop, mobile, WebKit, and active ink are saved in `.impeccable/review/`. Image viewing is unavailable in this session, so visual sign-off is not claimed. The review and documentation pass ran in-thread because no subagent tool is available.
 
-PRODUCT.md, the registered home-surface brief, source content, DESIGN.md, its design sidecar, and the run instructions exist. The project builds as a static site. No deployment or remote CI run was performed.
+The design detector reports advisory gaps between existing typography sizes and the compact DESIGN.md type ramp. Typography was not changed in this task, so that unrelated documentation reconciliation remains out of scope.
 
-### Fidelity
-
-| Promise | Evidence and result |
-| --- | --- |
-| Type | Computed Manrope display type at 68px on the 1440px viewport; body and supporting roles match the stylesheet. Letterform aesthetics remain unassessed. |
-| Material | An actual fluid solver, not a static brush image; pixel and fade tests pass in both desktop engines. |
-| Ground | Cool white/grey CSS ground, opaque white cards, bounded grey ink; contrast tests pass through the darkest permitted ink. |
-| Content hierarchy | Personal introduction precedes four projects, experience, background, skills, and contact. At 1440px, the projects heading starts around 635px and the first card around 698px. |
-| Navigation and notes | All declared destinations and disclosures work; there are no fabricated project repository URLs. |
-| Mobile | Stacked content, wrapping navigation, and functioning touch scroll; no measured overflow, including enlarged text. |
-
-### Ceiling
-
-Visual finish could not be judged from the image attachments in this harness. The captures are available for Galileo's review. No claim of pixel fidelity to either inspiration site is made.
-
-### Material fixes
-
-Resolved the initial enlarged-text overflow by allowing navigation wrapping and giving project grid tracks a zero minimum. Replaced the back-to-top text glyph with the existing outline icon system. Corrected two test assumptions: exact matching for the footer's link and WebKit's native keyboard navigation convention. No known failures remain in the tested paths.
-
-The requested refinement replaces hand-authored icons with Keyline's stroke components. It lowers rotational force from 18 to 3 and pointer gain from 7 to 2, narrows the dye profile, and paints continuous pointer segments. The display pass emphasizes density gradients at the edges instead of applying a canvas-wide blur. Its opacity bound, content layering, motion preferences, and failure behavior remain intact.
-
-### Keep
-
-Preserve the quiet white/grey ground, opaque cards, readable content, normal cursor, and optional ink effect.
-
-## Delivery gate
-
-- Hard gate PASS within the tested scope: supplied content only, real destinations, working disclosures and toggle, keyboard access, reduced motion, contrast bounds, and responsive reflow. See the interaction table for execution evidence.
-- Purpose gate PASS by source inspection: white/grey and behind-content ink follow the owner's brief; cards group real projects; motion belongs to the requested waterbrush, not autonomous decoration.
-- Liveliness verification LIMITED: ENERGY 1 / RHYTHM 2 / MOTION 2 is recorded; actual ink motion and layout variation are verified, but aesthetic identity requires a human visual review.
-- Craftsmanship checks PASS within the tested scope: source-backed claims, functional controls, no external asset dependency, resilient renderer failure paths, and documented design tokens. Visual sign-off is not claimed.
-
-## Captures
-
-All captures start at the document top. PNG decoding found nonblank text and white surface regions with no fully black pixels.
-
-- `.impeccable/review/desktop.png`: 1440 × 3136 physical pixels.
-- `.impeccable/review/mobile.png`: 1170 × 11913, a 390px CSS viewport at device scale 3.
-- `.impeccable/review/safari.png`: 2880 × 6272, a 1440px CSS viewport at device scale 2.
-- `.impeccable/review/ink-desktop.png`: active-ink desktop viewport.
-- `.impeccable/review/ink-safari.png`: active-ink WebKit viewport.
-
-The build and tests are complete locally. Hosting, a domain, individual project links, and a real downloadable résumé remain owner-supplied follow-ups, not placeholder controls on the site.
+The supplied CodePen returned HTTP 403 during implementation. The renderer is original code based on the owner's description. No deployment or remote CI run has been performed.

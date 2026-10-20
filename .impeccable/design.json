@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T09:52:49Z",
+  "generatedAt": "2026-10-20T10:05:34Z",
   "title": "Design System: Galileo Kim",
   "extensions": {
     "colorMeta": {
@@ -10,9 +10,6 @@
       "muted": { "role": "neutral", "displayName": "Supporting graphite" },
       "line": { "role": "neutral", "displayName": "Quiet divider" },
       "accent": { "role": "primary", "displayName": "Blue-grey ink" },
-      "control": { "role": "neutral", "displayName": "Control surface" },
-      "control-hover": { "role": "neutral", "displayName": "Control hover" },
-      "control-text": { "role": "neutral", "displayName": "Control text" },
       "selection": { "role": "neutral", "displayName": "Selected text ground" }
     },
     "typographyMeta": {
@@ -35,14 +32,6 @@
     ]
   },
   "components": [
-    {
-      "name": "Ink toggle",
-      "kind": "button",
-      "refersTo": "ink-toggle",
-      "description": "An on/off preference, with text for loading and unavailable states.",
-      "html": "<button class=\"ds-ink\" type=\"button\" aria-pressed=\"true\">Ink on</button>",
-      "css": ".ds-ink { font-family: 'Manrope Variable', sans-serif; font-size: .75rem; font-weight: 550; color: var(--color-control-text, #4d5966); background: var(--color-control, #eceff2); border: 0; border-radius: 8px; padding: .4rem .75rem; min-height: 44px; cursor: pointer; transition: background-color 160ms ease-out; } .ds-ink:hover:not(:disabled) { background: var(--color-control-hover, #e1e7ec); } .ds-ink:focus-visible { outline: 2px solid var(--color-accent, #3e596c); outline-offset: 5px; } .ds-ink:disabled { background: transparent; cursor: default; }"
-    },
     {
       "name": "Project card",
       "kind": "card",
@@ -76,12 +65,12 @@
   ],
   "narrative": {
     "northStar": "An empty canvas and an ink waterbrush",
-    "overview": "Galileo supplied the canvas metaphor, white/grey ground, and requirement for the cursor effect to remain behind the content. The implementation uses graphite text, white project cards, and space between groups. Visitors make the ink move; the text stays still.\n\nManrope gives the résumé content a conversational voice through open letterforms and moderate weights. The interaction supplies the expression that would otherwise come from imagery. There are no invented portraits or project screenshots.",
+    "overview": "Galileo specified a white/grey background, graphite text, and opaque white cards above the ink effect. The canvas concept applies to the background only. Website copy uses direct headings and résumé facts, without metaphorical taglines.\n\nManrope is self-hosted. Content stays visible and still. The decorative ink has no button, status label, or explanatory copy.",
     "keyCharacteristics": [
       "White/grey ground with opaque content cards.",
       "Left-aligned type and a narrow reading column.",
       "Motion limited to the visitor's ink trail and control-state transitions.",
-      "Keyline stroke icons and fine ink edges, with calm motion."
+      "Keyline stroke icons and soft, thin ink trails with calm motion."
     ],
     "rules": [],
     "dos": [
@@ -93,7 +82,8 @@
     "donts": [
       "Don't add a dark theme in conflict with the owner's white/grey brief.",
       "Don't make the background an autonomous animation or hide text behind an entrance effect.",
-      "Don't add fabricated project imagery or nonfunctional project links."
+      "Don't add fabricated project imagery or nonfunctional project links.",
+      "Don't use metaphorical headings, filler taglines, or visible controls for the decorative ink."
     ]
   }
 }

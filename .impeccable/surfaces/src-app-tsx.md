@@ -14,7 +14,7 @@ Visitor mode: Experience. A personal portfolio with a readable student biography
 
 THESIS: An open canvas with a personal introduction and an index of work. The visitor's pointer makes transient ink, while the portfolio stays still and readable. No fabricated product screenshots or decorative dashboard.
 
-OWN-WORLD: White and cool-grey ground, graphite type, opaque white project cards, quiet blue-grey link states. Manrope's open forms give the factual résumé content a conversational voice. Ink is the only expressive moving material.
+OWN-WORLD: White and cool-grey ground, graphite type, opaque white project cards, quiet blue-grey link states. Manrope sets the résumé content with direct headings and factual copy. Ink is the only expressive moving material.
 
 STORY: Meet Galileo as a UBC student; inspect four projects and their implementation notes; read work experience and extracurricular involvement; follow a real profile or email link.
 
@@ -26,7 +26,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 ## Constraints and defaults
 
-The user's explicit implementation request proceeds on the confirmed brief. White/grey is binding; a dark theme would conflict with it. No invented project URLs or downloadable résumé. Use inline project disclosures rather than dead repository buttons. Never publish the résumé phone number until requested. Ink must not intercept pointer events, and it is disabled under reduced motion or coarse-pointer input. Provide a persistent on/off preference and clear effect-failure fallback. No content depends on animation or WebGL.
+The user's explicit implementation request proceeds on the confirmed brief. White/grey is binding; a dark theme would conflict with it. No invented project URLs or downloadable résumé. Use inline project disclosures rather than dead repository buttons. Never publish the résumé phone number until requested. Ink must not intercept pointer events, and it is disabled under reduced motion or coarse-pointer input. Do not add a site-level ink toggle, status label, or stored preference. Hide the decorative canvas silently if rendering fails. Keep calm, narrow ink trails with soft density shading and no edge-contrast boost. No content depends on animation or WebGL. Use literal section headings: Projects, Work experience, Education & extracurriculars, and Contact. Keep hackathon facts within Education rather than a standalone themed section; remove decorative taglines and descriptions of the background.
 
 ## Reference evidence
 

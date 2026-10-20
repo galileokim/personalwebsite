@@ -1,6 +1,6 @@
 ---
 name: Galileo Kim
-description: Personal portfolio on an ink-waterbrush canvas
+description: Personal portfolio with a subdued ink background
 colors:
   paper: "#f7f8fa"
   surface: "#ffffff"
@@ -8,9 +8,6 @@ colors:
   muted: "#56616d"
   line: "#e0e4e9"
   accent: "#3e596c"
-  control: "#eceff2"
-  control-hover: "#e1e7ec"
-  control-text: "#4d5966"
   selection: "#d6e1e8"
 typography:
   display:
@@ -42,7 +39,6 @@ typography:
     fontWeight: 550
 rounded:
   focus: "3px"
-  control: "8px"
   card: "14px"
 spacing:
   tight: "0.5rem"
@@ -51,14 +47,6 @@ spacing:
   group: "2rem"
   section: "clamp(3rem, 6vw, 4.75rem)"
 components:
-  ink-toggle:
-    backgroundColor: "{colors.control}"
-    textColor: "{colors.control-text}"
-    rounded: "{rounded.control}"
-    padding: "0.4rem 0.75rem"
-    typography: "{typography.label}"
-  ink-toggle-hover:
-    backgroundColor: "{colors.control-hover}"
   project-card:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
@@ -75,21 +63,21 @@ components:
 
 **Creative North Star: "An empty canvas and an ink waterbrush"**
 
-Galileo supplied the canvas metaphor, white/grey ground, and requirement for the cursor effect to remain behind the content. The implementation uses graphite text, white project cards, and space between groups. Visitors make the ink move; the text stays still.
+Galileo specified a white/grey background, graphite text, and opaque white cards above the ink effect. The canvas concept applies to the background only. Website copy uses direct headings and résumé facts, without metaphorical taglines.
 
-Manrope gives the résumé content a conversational voice through open letterforms and moderate weights. The interaction supplies the expression that would otherwise come from imagery. There are no invented portraits or project screenshots.
+Manrope is self-hosted. Content stays visible and still. The decorative ink has no button, status label, or explanatory copy.
 
 Key characteristics:
 - White/grey ground with opaque content cards.
 - Left-aligned type and a narrow reading column.
 - Motion limited to the visitor's ink trail and control-state transitions.
-- Keyline stroke icons and fine ink edges, with calm motion.
+- Keyline stroke icons and soft, thin ink trails with calm motion.
 
 ## Colors
 
-The palette stays close to grey. The blue-grey accent identifies links, focus, and the ink control without competing with the content.
+The palette stays close to grey. The blue-grey accent identifies links and focus without competing with the content.
 
-Primary: `accent` supplies interactive emphasis. Neutrals: `paper` is the canvas, `surface` is the card, `ink` is primary text, `muted` is supporting text, and `line` separates groups. The control colors distinguish the ink toggle's resting and hover states. `selection` belongs to selected text.
+Primary: `accent` supplies interactive emphasis. Neutrals: `paper` is the canvas, `surface` is the card, `ink` is primary text, `muted` is supporting text, and `line` separates groups. `selection` belongs to selected text.
 
 Supporting text must remain readable over the darkest permitted ink. `tests/contrast.test.ts` reads the actual CSS and shader values and enforces a 4.5:1 minimum for primary, supporting, and accent text.
 
@@ -109,17 +97,13 @@ Section separation is larger than spacing inside each group. Cards grow with the
 
 ## Elevation & Depth
 
-The system uses no box shadows. Opaque white cards with a single border sit above the ink canvas. A narrow dye trail and edge-weighted opacity create wispy ink with a light interior and clearer edges. The canvas has no CSS blur; text and card surfaces do not use backdrop blur. The fixed canvas has no pointer events and sits below the content stacking layer.
+The system uses no box shadows. Opaque white cards with a single border sit above the ink canvas. A narrow dye trail uses smooth density-based opacity and a one-pixel canvas blur. Edges receive no additional contrast. Text and card surfaces do not use backdrop blur. The fixed canvas has no pointer events and sits below the content stacking layer.
 
 ## Shapes
 
-Cards use the card radius; the ink toggle uses the smaller control radius. Focus rings use a small corner radius and remain outside the focused element. Other content sits on the page without containers. Icons come from the rounded stroke entry point of `@keyline-icons/react`, with the library's native 2px stroke on a 24px grid. They accompany text labels and remain hidden from assistive technology. GitHub uses GitBranch and LinkedIn uses IdBadge because Keyline has no brand logos; the destination labels remain explicit.
+Cards use the card radius. Focus rings use a small corner radius and remain outside the focused element. Other content sits on the page without containers. Icons come from the rounded stroke entry point of `@keyline-icons/react`, with the library's native 2px stroke on a 24px grid. They accompany text labels and remain hidden from assistive technology. GitHub uses GitBranch and LinkedIn uses IdBadge because Keyline has no brand logos; the destination labels remain explicit.
 
 ## Components
-
-### Ink toggle
-
-A labeled button with `aria-pressed`. It distinguishes on, off, loading, reduced-motion, touch, and unavailable states in text. It preserves its preference when storage is available and remains usable when storage is denied. Focus uses a two-pixel accent outline with a five-pixel offset.
 
 ### Project card and notes
 
@@ -127,11 +111,11 @@ Cards group one project's title, date, summary, technologies, and native disclos
 
 ### Navigation and links
 
-The header links to real sections. Profile links include labels and an accessible new-tab indication. Email uses `mailto:`. Controls and standalone links have a minimum 44px height. Link underlines sit below the text rather than touching it.
+The header links to real sections. Profile links include labels and an accessible new-tab indication. Email uses `mailto:`. Controls and standalone links have a minimum 44px height. Link underlines sit below the text rather than touching it. Focus uses a two-pixel accent outline with a five-pixel offset.
 
 ### Ink canvas
 
-The original WebGL simulation advects velocity and dye, applies low-strength vorticity, and projects pressure. Continuous segment splats keep fast strokes connected. A broader velocity brush carries a narrower dye trail; higher-resolution dye preserves fine edges. Density gradients give those edges more contrast than the interior without raising the maximum display alpha (0.14). It starts only on pointer movement, stops after inactivity or tab hiding, and clears when disabled. Reduced motion and primary coarse pointers disable it. A rendering failure leaves the content intact and labels the effect unavailable.
+The original WebGL simulation advects velocity and dye, applies low-strength vorticity, and projects pressure. Continuous segment splats keep fast strokes connected. A broader velocity brush carries a narrower dye trail. Opacity follows dye density smoothly, bounded at 0.14, without an edge-emphasis pass. Ink starts on pointer movement and stops after inactivity or tab hiding. Reduced motion and primary coarse pointers disable it. A rendering failure hides the decoration without adding an error message. There is no site-level toggle or stored preference.
 
 ## Do's and Don'ts
 
@@ -142,3 +126,4 @@ The original WebGL simulation advects velocity and dye, applies low-strength vor
 - Don't add a dark theme in conflict with the owner's white/grey brief.
 - Don't make the background an autonomous animation or hide text behind an entrance effect.
 - Don't add fabricated project imagery or nonfunctional project links.
+- Don't use metaphorical headings, filler taglines, or visible controls for the decorative ink.
