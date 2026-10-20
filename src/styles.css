@@ -250,8 +250,8 @@ button:disabled {
   border-bottom-right-radius: 14px;
   clip-path: inset(100% 0 0 100%);
 }
-.project-card:focus-within::before,
-.project-card:focus-within::after {
+.project-card:has(:focus-visible)::before,
+.project-card:has(:focus-visible)::after {
   opacity: 1;
   clip-path: inset(0);
 }

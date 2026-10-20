@@ -2,7 +2,7 @@
 
 ## Latest change
 
-Project cards now reveal top-left and bottom-right corner strokes on hover or focus within, based on the inspected kdrag0n.dev stylesheet. Native project notes expand and collapse with interruptible height animations. Text stays fully opaque during the transition. Both interactions respect reduced motion; touch devices do not receive hover styling. Page content and the fluid renderer are unchanged.
+Fixed the card corners remaining extended after clicking project notes and moving the pointer away. The highlight now uses hover or visible keyboard focus (`:has(:focus-visible)`), rather than all focus within the card. Native project notes expand and collapse with interruptible height animations. Text stays fully opaque during the transition. Both interactions respect reduced motion; touch devices do not receive hover styling. Page content and the fluid renderer are unchanged.
 
 Restored the ink effect from commit `6bead2c`, before wave-front removal. The simulation files (`fluid.ts` and `math.ts`) still match that revision exactly. The shader differs only in its display opacity multiplier, reduced from 0.14 to 0.09. The original forward momentum, leading wave, dye decay, 1px blur, and 6.5-second idle clearing are restored. Current wording, Keyline icons, and the button-free integration are unchanged.
 
@@ -13,10 +13,12 @@ Restored the ink effect from commit `6bead2c`, before wave-front removal. The si
 - Biome lint and formatting.
 - Strict application TypeScript check and production build.
 - 16 unit tests for simulation bounds, source content, maximum-opacity text contrast, and official Keyline stroke mappings.
-- 66 browser tests across desktop Chromium, desktop WebKit, and a touch-device Chromium viewport. Twelve device-inapplicable cases skip by design.
+- 68 browser tests across desktop Chromium, desktop WebKit, and a touch-device Chromium viewport. Thirteen device-inapplicable cases skip by design.
 - Automated axe checks found no WCAG 2 A/AA or 2.1 AA violations with project notes closed or expanded. This is not a complete WCAG audit.
 - No measured horizontal overflow at 320, 390, 600, 768, 1024, or 1440 CSS pixels, or at 390px with doubled root text size.
 - Hover screenshots contain accent pixels on both arms of the top-left and bottom-right corners, with no accent at the opposite corners. Card bounds do not move on hover.
+- A regression test reproduced the stuck highlight before the fix. It now verifies both corners retract after opening and closing each project's notes and moving the pointer away, with normal and reduced motion. The control retains its focus and disclosure state; no forced blur is used.
+- Keyboard focus still highlights the current card; tabbing to the next disclosure retracts the previous card's corners.
 - Animation timeline probes verify intermediate heights in both directions while text opacity remains 1. Repeated clicks reverse from the current height; open notes fit their content after resizing.
 - Keyboard tests preserve focus rings, expanded states, and native details toggling. Closing content is temporarily inert; the attribute clears once the native disclosure closes.
 - Reduced-motion tests verify immediate transitions and cancellation when the preference changes during an animation.
@@ -31,7 +33,7 @@ Restored the ink effect from commit `6bead2c`, before wave-front removal. The si
 | Element or state | Result |
 | --- | --- |
 | Section navigation and back-to-top links | Reach the corresponding content |
-| Project card corners | Extend on hover or keyboard focus without moving the card or intercepting input |
+| Project card corners | Extend on hover or visible keyboard focus; retract on mouse exit after clicking notes |
 | Four project disclosures | Animate open and closed by pointer and keyboard; rapid toggles reverse without a height jump |
 | Expanded notes | Resize to their content without clipping or horizontal overflow |
 | Skip link | Moves keyboard focus to main content; WebKit uses Option-Tab for links |
@@ -52,7 +54,7 @@ Restored the ink effect from commit `6bead2c`, before wave-front removal. The si
 - PASS, accessibility: pointer and keyboard disclosures, visible focus, full text opacity, and live reduced-motion behavior pass in Chromium and WebKit. Axe reports no violations in settled states.
 - PASS, responsive layout: expanded panels fit their content after resizing; existing narrow-screen and enlarged-text overflow checks pass.
 - PASS, content and direction: no résumé data, links, ink parameters, type styles, or palette values changed. The existing ENERGY 1 / RHYTHM 2 / MOTION 2 direction is retained.
-- PASS, implementation: lint, TypeScript, production build, 16 unit tests, and 66 browser tests pass. The interaction table above records the exercised controls.
+- PASS, implementation: lint, TypeScript, production build, 16 unit tests, and 68 browser tests pass. The interaction table above records the exercised controls.
 
 ## Review limits
 

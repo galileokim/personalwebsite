@@ -20,7 +20,7 @@ STORY: Meet Galileo as a UBC student; inspect four projects and their implementa
 
 FIRST VIEWPORT: A compact name/navigation row above a left-aligned introduction, a two-line student biography and profile links. Generous blank space allows the waterbrush to appear. The projects heading and current project begin within a typical desktop viewport. On mobile, navigation wraps intentionally and content stacks without a fixed header.
 
-FORM: The user's pinned empty-canvas direction overrides the roll's assigned index 4 and catalog challengers. seed: none (unavailable). The launcher did not return a shareable seed reference. Ink disperses with pointer velocity, then fades. Requested card corners extend on hover or focus, and project notes expand or collapse on activation. There are no page-load or scroll-reveal text animations. Code-led: this harness has no image-generation tool. ENERGY 1 / RHYTHM 2 / MOTION 2, with motion confined to the requested interaction.
+FORM: The user's pinned empty-canvas direction overrides the roll's assigned index 4 and catalog challengers. seed: none (unavailable). The launcher did not return a shareable seed reference. Ink disperses with pointer velocity, then fades. Requested card corners extend on hover or visible keyboard focus, not retained mouse focus, and project notes expand or collapse on activation. There are no page-load or scroll-reveal text animations. Code-led: this harness has no image-generation tool. ENERGY 1 / RHYTHM 2 / MOTION 2, with motion confined to the requested interaction.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 

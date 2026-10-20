@@ -83,8 +83,54 @@ test('card corners extend on hover without moving the card', async ({
     .toBe('0');
 });
 
+test('card corners clear after clicking notes and moving the pointer away', async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(isMobile, 'Touch devices do not have hover.');
+  await page.goto('/');
+  for (const reducedMotion of ['no-preference', 'reduce'] as const) {
+    await page.emulateMedia({ reducedMotion });
+    for (const card of await page.locator('.project-card').all()) {
+      const summary = card.locator('summary');
+      for (const opening of [true, false]) {
+        await card.hover();
+        await summary.click();
+        await expect(summary).toHaveAttribute('aria-expanded', String(opening));
+        const focused = await summary.evaluate(
+          (element) => element === document.activeElement,
+        );
+        await page.mouse.move(0, 0);
+        for (const corner of ['::before', '::after']) {
+          await expect
+            .poll(() =>
+              card.evaluate((element, pseudo) => {
+                const style = getComputedStyle(element, pseudo);
+                return { opacity: style.opacity, clipPath: style.clipPath };
+              }, corner),
+            )
+            .toEqual({
+              opacity: '0',
+              clipPath:
+                corner === '::before'
+                  ? 'inset(0px 100% 100% 0px)'
+                  : 'inset(100% 0px 0px 100%)',
+            });
+        }
+        expect(
+          await summary.evaluate(
+            (element) => element === document.activeElement,
+          ),
+        ).toBe(focused);
+        await expect(summary).toHaveAttribute('aria-expanded', String(opening));
+      }
+    }
+  }
+});
+
 test('keyboard focus highlights the corners without clipping the disclosure focus ring', async ({
   page,
+  browserName,
 }) => {
   await page.goto('/');
   const card = page.locator('.project-card').first();
@@ -109,6 +155,18 @@ test('keyboard focus highlights the corners without clipping the disclosure focu
   await expect(summary).toHaveAttribute('aria-expanded', 'false');
   await expect(card.locator('details')).not.toHaveAttribute('open');
   await expect(summary).toBeFocused();
+  await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
+  await expect(page.locator('summary').nth(1)).toBeFocused();
+  for (const corner of ['::before', '::after']) {
+    await expect
+      .poll(() =>
+        card.evaluate(
+          (element, pseudo) => getComputedStyle(element, pseudo).opacity,
+          corner,
+        ),
+      )
+      .toBe('0');
+  }
 });
 
 test('notes animate in both directions while text stays at full contrast', async ({
