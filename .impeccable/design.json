@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T17:48:36Z",
+  "generatedAt": "2026-10-20T19:21:32Z",
   "title": "Design System: Galileo Kim",
   "extensions": {
     "colorMeta": {
@@ -23,6 +23,9 @@
     "motion": [
       { "name": "control-state", "value": "160ms ease-out", "purpose": "Link and control color feedback." },
       { "name": "disclosure-icon", "value": "180ms ease-out", "purpose": "Rotate the plus mark when project notes open." },
+      { "name": "card-corners", "value": "220ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Reveal top-left and bottom-right border strokes on hover or focus within." },
+      { "name": "notes-open", "value": "260ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Expand notes in place while preserving full text contrast." },
+      { "name": "notes-close", "value": "180ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Collapse notes without an abrupt layout jump." },
       { "name": "ink-idle", "value": "6500ms", "purpose": "Clear the canvas and stop scheduling frames after the last pointer input." }
     ],
     "breakpoints": [
@@ -36,7 +39,7 @@
       "name": "Project card",
       "kind": "card",
       "refersTo": "project-card",
-      "description": "Opaque content above the ink. The card itself is not a link.",
+      "description": "Opaque content above the ink, with extending top-left and bottom-right corner strokes on hover or focus. The card itself is not a link.",
       "html": "<article class=\"ds-card\"><h3>Social Time Tracker</h3><p>An offline-first time tracker for iOS, with Live Activities and Dynamic Island integration.</p></article>",
       "css": ".ds-card { padding: 1.5rem; background: var(--color-surface, #fff); color: var(--color-ink, #262b31); border: 1px solid var(--color-line, #e0e4e9); border-radius: 14px; font-family: 'Manrope Variable', sans-serif; } .ds-card h3 { margin: 0; font-size: 1.125rem; font-weight: 650; letter-spacing: -.02em; } .ds-card p { margin: .75rem 0 0; font-size: .875rem; line-height: 1.75; }"
     },
@@ -44,7 +47,7 @@
       "name": "Project notes",
       "kind": "custom",
       "refersTo": "project-notes",
-      "description": "A native, keyboard-operable disclosure that keeps technical detail in context.",
+      "description": "A native, keyboard-operable disclosure enhanced by ProjectNotes.tsx with interruptible height animations. Reduced motion changes state immediately.",
       "html": "<details class=\"ds-notes\"><summary>Project notes</summary><p>Built persistent app state with SwiftData and surfaced activity through ActivityKit.</p></details>",
       "css": ".ds-notes { font-family: 'Manrope Variable', sans-serif; } .ds-notes summary { color: var(--color-accent, #3e596c); font-size: .75rem; font-weight: 600; min-height: 44px; display: flex; align-items: center; width: fit-content; cursor: pointer; } .ds-notes summary:hover { color: var(--color-ink, #262b31); } .ds-notes summary:focus-visible { outline: 2px solid var(--color-accent, #3e596c); outline-offset: 5px; border-radius: 3px; } .ds-notes p { color: var(--color-muted, #56616d); font-size: .8125rem; line-height: 1.8; }"
     },
@@ -65,7 +68,7 @@
   ],
   "narrative": {
     "northStar": "An empty canvas and an ink waterbrush",
-    "overview": "Galileo specified a white/grey background, graphite text, and opaque white cards above the ink effect. The canvas concept applies to the background only. Website copy uses direct headings and résumé facts, without metaphorical taglines.\n\nManrope is self-hosted. Content stays visible and still. The decorative ink has no button, status label, or explanatory copy.",
+    "overview": "Galileo specified a white/grey background, graphite text, and opaque white cards above the ink effect. The canvas concept applies to the background only. Website copy uses direct headings and résumé facts, without metaphorical taglines.\n\nManrope is self-hosted. Main content has no entrance animation. The decorative ink has no button, status label, or explanatory copy.",
     "keyCharacteristics": [
       "White/grey ground with opaque content cards.",
       "Left-aligned type and a narrow reading column.",

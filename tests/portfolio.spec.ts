@@ -315,6 +315,7 @@ test('passes automated accessibility checks with notes open and closed', async (
     if (expanded)
       for (const summary of await page.locator('summary').all())
         await summary.click();
+    await expect(page.locator('[data-animating]')).toHaveCount(0);
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
       .analyze();

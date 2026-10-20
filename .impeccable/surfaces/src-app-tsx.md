@@ -2,7 +2,7 @@
 version: 1
 slug: "src-app-tsx"
 primary_target: "src/App.tsx"
-related_targets: ["src/styles.css","src/components/InkCanvas.tsx"]
+related_targets: ["src/styles.css","src/components/InkCanvas.tsx","src/components/ProjectNotes.tsx"]
 ---
 
 # Home surface
@@ -20,7 +20,7 @@ STORY: Meet Galileo as a UBC student; inspect four projects and their implementa
 
 FIRST VIEWPORT: A compact name/navigation row above a left-aligned introduction, a two-line student biography and profile links. Generous blank space allows the waterbrush to appear. The projects heading and current project begin within a typical desktop viewport. On mobile, navigation wraps intentionally and content stacks without a fixed header.
 
-FORM: The user's pinned empty-canvas direction overrides the roll's assigned index 4 and catalog challengers. seed: none (unavailable). The launcher did not return a shareable seed reference. Ink disperses with pointer velocity, then fades; text does not animate. Code-led: this harness has no image-generation tool. ENERGY 1 / RHYTHM 2 / MOTION 2, with motion confined to the requested interaction.
+FORM: The user's pinned empty-canvas direction overrides the roll's assigned index 4 and catalog challengers. seed: none (unavailable). The launcher did not return a shareable seed reference. Ink disperses with pointer velocity, then fades. Requested card corners extend on hover or focus, and project notes expand or collapse on activation. There are no page-load or scroll-reveal text animations. Code-led: this harness has no image-generation tool. ENERGY 1 / RHYTHM 2 / MOTION 2, with motion confined to the requested interaction.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
@@ -30,4 +30,4 @@ The user's explicit implementation request proceeds on the confirmed brief. Whit
 
 ## Reference evidence
 
-The HTML at https://kdrag0n.dev/ was accessible: concise introduction, grouped project lists, direct contact links. Preserve those information-design qualities without copying code or identity. The supplied CodePen returned HTTP 403; the fluid renderer is an original implementation based on the user's description, not inspected or copied CodePen source.
+The HTML and stylesheet at https://kdrag0n.dev/ were accessible: concise introduction, grouped project lists, direct contact links, and two expanding L-shaped border strokes on hovered cards. The requested corner interaction is adapted to this site's existing card radius and blue-grey accent, with keyboard-focus and reduced-motion support. Preserve the portfolio's own layout and identity. The supplied CodePen returned HTTP 403; the fluid renderer is an original implementation based on the user's description, not inspected or copied CodePen source.

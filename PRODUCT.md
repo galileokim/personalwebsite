@@ -31,6 +31,8 @@ The site presents Galileo's work. The capabilities described in his projects bel
 - Present Galileo's student background, projects, and extracurricular information using the supplied résumé.
 - Keep the fluid ink effect from before the wave-front-removal changes (`6bead2c`), including its cursor-centered brush, leading wave, motion, softness, and original fade behavior. Lower only the display opacity to make it more subtle. Do not apply the later pointed-nib, trailing-only force, or shortened-lifetime modifications. Keep real fluid dynamics, not procedural ribbons or particles. Do not show an ink button, status label, or explanation.
 - Keep the effect behind the text and content cards. It must remain less prominent than the content.
+- Add expanding top-left and bottom-right corner strokes to project cards on hover, following the kdrag0n.dev reference. Provide equivalent focus feedback without making the entire card a link.
+- Animate project notes opening and closing. Preserve keyboard operation, responsive content sizing, and reduced-motion support.
 - Preserve the names, dates, technologies, and accomplishments from the résumé when adapting the text. Do not invent additional experience, project URLs, availability for work, or claims.
 - Treat résumé metrics as owner-supplied claims, not independently verified benchmarks. Preserve their qualifications, including `30+`, `100+`, and expected graduation.
 

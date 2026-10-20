@@ -212,6 +212,7 @@ button:disabled {
   grid-template-columns: minmax(0, 1fr);
 }
 .project-card {
+  position: relative;
   min-width: 0;
   display: grid;
   gap: 1.25rem;
@@ -219,6 +220,47 @@ button:disabled {
   background: #ffffff;
   border: 1px solid var(--color-line);
   border-radius: 14px;
+}
+.project-card::before,
+.project-card::after {
+  content: "";
+  position: absolute;
+  width: min(40%, 200px);
+  height: min(40%, 200px);
+  border: 2px solid var(--color-accent);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    clip-path 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 160ms ease-out;
+}
+.project-card::before {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 14px;
+  clip-path: inset(0 100% 100% 0);
+}
+.project-card::after {
+  right: -1px;
+  bottom: -1px;
+  border-top: 0;
+  border-left: 0;
+  border-bottom-right-radius: 14px;
+  clip-path: inset(100% 0 0 100%);
+}
+.project-card:focus-within::before,
+.project-card:focus-within::after {
+  opacity: 1;
+  clip-path: inset(0);
+}
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover::before,
+  .project-card:hover::after {
+    opacity: 1;
+    clip-path: inset(0);
+  }
 }
 .project-category {
   margin-bottom: 0.375rem;
@@ -277,15 +319,21 @@ button:disabled {
   height: 0.8rem;
   transition: transform 180ms ease-out;
 }
-.project-details[open] summary .icon {
+.project-details[data-expanded="true"] summary .icon {
   transform: rotate(45deg);
 }
 .when-open,
-details[open] .when-closed {
+.project-details[data-expanded="true"] .when-closed {
   display: none;
 }
-details[open] .when-open {
+.project-details[data-expanded="true"] .when-open {
   display: inline;
+}
+.project-notes-content {
+  display: flow-root;
+}
+.project-details[data-animating] .project-notes-panel {
+  overflow: clip;
 }
 .project-notes {
   padding-left: 1.1rem;
@@ -438,13 +486,17 @@ details[open] .when-open {
   a,
   button,
   summary,
-  .project-details summary .icon {
+  .project-details summary .icon,
+  .project-card::before,
+  .project-card::after {
     transition: none;
   }
 }
 
 @media print {
   .ink-canvas,
+  .project-card::before,
+  .project-card::after,
   nav,
   .skip-link,
   .site-footer {

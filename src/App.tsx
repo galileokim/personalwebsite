@@ -1,5 +1,6 @@
 import { Icon } from './components/Icon';
 import { InkCanvas } from './components/InkCanvas';
+import { ProjectNotes } from './components/ProjectNotes';
 import { experience, profile, projects, skills } from './data/portfolio';
 
 export default function App() {
@@ -84,18 +85,7 @@ export default function App() {
                         <li key={technology}>{technology}</li>
                       ))}
                     </ul>
-                    <details className="project-details">
-                      <summary aria-label={`${project.name} project notes`}>
-                        <span className="when-closed">Project notes</span>
-                        <span className="when-open">Close notes</span>
-                        <Icon name="plus" />
-                      </summary>
-                      <ul className="project-notes">
-                        {project.notes.map((note) => (
-                          <li key={note}>{note}</li>
-                        ))}
-                      </ul>
-                    </details>
+                    <ProjectNotes name={project.name} notes={project.notes} />
                   </div>
                 </article>
               ))}

@@ -41,7 +41,7 @@ Playwright saves desktop, mobile, WebKit, and active-ink captures under `.impecc
 - `DESIGN.md`: the implemented visual system.
 - `src/styles.css`: Tailwind theme, component styles, and responsive rules.
 
-Project notes use native disclosures. There are no placeholder repository buttons, fictional screenshots, or links to a missing résumé PDF. Add individual project links when their real destinations are available.
+Project cards reveal top-left and bottom-right border accents on hover or keyboard focus. `src/components/ProjectNotes.tsx` enhances native disclosures with interruptible opening and closing animations. Both effects respect reduced motion; touch devices do not receive hover styling. There are no placeholder repository buttons, fictional screenshots, or links to a missing résumé PDF. Add individual project links when their real destinations are available.
 
 ## Ink behavior
 
