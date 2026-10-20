@@ -22,6 +22,13 @@ export default defineConfig({
       },
     },
     {
+      name: 'safari',
+      use: {
+        ...devices['Desktop Safari'],
+        viewport: { width: 1440, height: 1000 },
+      },
+    },
+    {
       name: 'mobile',
       use: { ...devices['iPhone 13'], defaultBrowserType: 'chromium' },
     },

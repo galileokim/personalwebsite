@@ -116,9 +116,11 @@ test('profile links use the supplied destinations and email works as a mailto li
 
 test('skip link, keyboard disclosure, and focus indicators work', async ({
   page,
+  browserName,
 }) => {
   await page.goto('/');
-  await page.keyboard.press('Tab');
+  // WebKit follows macOS's Option-Tab convention for focusing links.
+  await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
   await expect(
     page.getByRole('link', { name: 'Skip to content' }),
   ).toBeFocused();
@@ -322,7 +324,7 @@ test('passes automated accessibility checks with notes open and closed', async (
 test('pointer movement paints actual pixels behind the content', async ({
   page,
   isMobile,
-}) => {
+}, testInfo) => {
   test.skip(
     isMobile,
     'The touch layout intentionally disables the cursor effect.',
@@ -356,7 +358,9 @@ test('pointer movement paints actual pixels behind the content', async ({
       .evaluate((element) => getComputedStyle(element).backgroundColor),
   ).toBe('rgb(255, 255, 255)');
   await mkdir(reviewDirectory, { recursive: true });
-  await page.screenshot({ path: `${reviewDirectory}/ink.png` });
+  await page.screenshot({
+    path: `${reviewDirectory}/ink-${testInfo.project.name}.png`,
+  });
   await page.waitForTimeout(7000);
   const faded = PNG.sync.read(await page.screenshot({ clip }));
   let remaining = 0;

@@ -225,7 +225,7 @@ export default function App() {
             like me.
           </p>
           <a href="#top">
-            Back to top <span aria-hidden="true">↑</span>
+            Back to top <Icon name="arrow" className="-rotate-45" />
           </a>
         </footer>
       </div>
