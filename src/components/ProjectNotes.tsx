@@ -106,7 +106,6 @@ export function ProjectNotes({ name, notes }: ProjectNotesProps) {
         }
       }}
     >
-      {/* biome-ignore lint/a11y/useSemanticElements: Summary preserves native details behavior and exposes the animated expanded state. */}
       <summary
         role="button"
         aria-label={`${name} project notes`}

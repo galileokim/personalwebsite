@@ -164,7 +164,6 @@ export function createFluid(canvas: HTMLCanvasElement, onFailure: () => void) {
     textures: Record<string, Target>,
     values: Record<string, Uniform> = {},
   ) {
-    // biome-ignore lint/correctness/useHookAtTopLevel: WebGL's useProgram is not a React hook.
     gl.useProgram(shader.handle);
     let unit = 0;
     for (const [name, input] of Object.entries(textures)) {
