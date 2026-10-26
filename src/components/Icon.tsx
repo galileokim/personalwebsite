@@ -1,19 +1,19 @@
 import {
-  ArrowUp,
-  ArrowUpRight,
-  GitBranch,
-  IdBadge,
-  Mail,
-  Plus,
-} from '@keyline-icons/react';
+  AddRegular,
+  ArrowRightUpRegular,
+  ArrowUpRegular,
+  GithubRegular,
+  LinkedinRegular,
+  MailRegular,
+} from '@mingcute/react/core-regular';
 
 const icons = {
-  arrow: ArrowUpRight,
-  up: ArrowUp,
-  plus: Plus,
-  mail: Mail,
-  github: GitBranch,
-  linkedin: IdBadge,
+  arrow: ArrowRightUpRegular,
+  up: ArrowUpRegular,
+  plus: AddRegular,
+  mail: MailRegular,
+  github: GithubRegular,
+  linkedin: LinkedinRegular,
 } as const;
 
 export function Icon({

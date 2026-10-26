@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@fontsource-variable/manrope": "^5.3.0",
-    "@keyline-icons/react": "^2.0.0",
+    "@mingcute/react": "^3.0.2",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
