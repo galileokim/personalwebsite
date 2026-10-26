@@ -7,10 +7,26 @@ export const profile = {
 
 export const projects = [
   {
+    id: 'liked-semantic-search',
+    name: 'YouTube Likes Semantic Search',
+    category: 'Search engine',
+    date: 'Oct. 2026',
+    url: 'https://github.com/galileokim/Liked-Semantic-Search',
+    description:
+      'A semantic search engine over liked YouTube videos that deep links to the exact timestamp of the matching transcript.',
+    technologies: ['Python', 'FastAPI', 'ChromaDB', 'BGE embeddings'],
+    notes: [
+      'Designed an idempotent ingestion pipeline with local BGE embeddings and a persistent ChromaDB index.',
+      'Exposed a FastAPI backend, CLI, and web UI over the same search core.',
+      'Added a recall@k and MRR evaluation harness to measure retrieval quality.',
+    ],
+  },
+  {
     id: 'social-time-tracker',
     name: 'Social Time Tracker',
     category: 'iOS + backend',
     date: 'Jul. 2026 – present',
+    url: 'https://github.com/galileokim/time-tracker',
     description:
       'An offline-first time tracker for iOS, with Live Activities and Dynamic Island integration.',
     technologies: [
@@ -32,6 +48,7 @@ export const projects = [
     name: 'ExerciseLogger',
     category: 'Java application',
     date: 'Mar. 2026',
+    url: 'https://github.com/galileokim/Exercise-Logger',
     description:
       'A Java application for tracking exercise, visualizing progress, and saving workout history.',
     technologies: ['Java', 'JUnit', 'JSON'],
@@ -46,6 +63,7 @@ export const projects = [
     name: 'Mailsweep',
     category: 'Web application',
     date: 'Oct. 2025',
+    url: 'https://github.com/AustinBao/MailSweep',
     description:
       'A web application that parses email subscriptions and automates unsubscribe processing.',
     technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Gmail API'],
@@ -99,10 +117,11 @@ export const skills = [
   {
     label: 'Frameworks',
     items:
-      'React, Node.js, Express, Fastify, Next.js, SwiftUI, Laravel, Tailwind CSS',
+      'React, Node.js, Express, Fastify, FastAPI, Next.js, SwiftUI, Laravel, Tailwind CSS',
   },
   {
     label: 'Tools & APIs',
-    items: 'Git, Docker, MongoDB, PostgreSQL, Redis, OpenAI API, Gmail API',
+    items:
+      'Git, Docker, MongoDB, PostgreSQL, Redis, ChromaDB, OpenAI API, Gmail API',
   },
 ] as const;

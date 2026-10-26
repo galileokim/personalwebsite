@@ -74,6 +74,18 @@ export default function App() {
                     <p className="project-category">{project.category}</p>
                     <h3>{project.name}</h3>
                     <p className="project-date">{project.date}</p>
+                    {'url' in project && (
+                      <a
+                        className="project-link"
+                        href={project.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`${project.name} on GitHub (opens in a new tab)`}
+                      >
+                        <Icon name="github" />
+                        GitHub
+                      </a>
+                    )}
                   </div>
                   <div className="project-body">
                     <p className="project-description">{project.description}</p>

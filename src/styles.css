@@ -278,6 +278,23 @@ button:disabled {
   color: var(--color-muted);
   font-variant-numeric: tabular-nums;
 }
+.project-link {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+.project-link:hover {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+.project-link .icon {
+  width: 0.85rem;
+  height: 0.85rem;
+}
 .project-description {
   font-size: 0.875rem;
   line-height: 1.75;
